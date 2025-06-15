@@ -13,9 +13,9 @@ fun main(): kotlin.Unit = runBlocking {
     initKoin()
 
     //TODO Example How TO USE
-//    val useCase = GlobalContext.get().get<CatsUseCase>()
+    val useCase = GlobalContext.get().get<CatsUseCase>()
 
-//    println(useCase.getAllCats());
+    println(useCase.getAllCats());
 //    println(useCase.getCatById(catId = 1));
 
 
