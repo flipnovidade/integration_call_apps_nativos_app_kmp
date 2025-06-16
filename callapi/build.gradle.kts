@@ -4,7 +4,7 @@ plugins {
     id("com.android.library")
 }
 
-kotlin {
+kotlin{
     jvm()
     androidTarget()
 
@@ -38,6 +38,8 @@ kotlin {
             }
         }
 
+        val jvmMain by getting
+
         val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
@@ -50,8 +52,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
-
-        // ✅ Não crie androidUnitTest — já existe!
 
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -81,7 +81,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.example"
+    namespace = "br.com.api.call.shared"
     compileSdk = 34
     defaultConfig {
         minSdk = 21
