@@ -1,6 +1,6 @@
 
 * Autor: Felippe Ferreira 
-* Linkdien: https://www.linkedin.com/in/felippe-849645116/
+* Linkedin: https://www.linkedin.com/in/felippe-849645116/
 
 
 Resumo:
