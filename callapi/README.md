@@ -14,9 +14,9 @@ Projeto utilizado apenas para aprendizagem.
 Projeto:
 
 -> KMP: engine de consulta api -> sera compartilhada entre os projetos
--> MV(sem ViewModel)
--> Koin
--> Ktor
+****-> ****MV(sem ViewModel)
+****-> ****Koin
+****-> ****Ktor
 
 
 *  Kotlin Multiplataforma (https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-dependencies.html)
