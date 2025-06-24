@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="callapi-jvm">
-    <output-path>$PROJECT_DIR$/build/libs</output-path>
-    <root id="archive" name="callapi-jvm.jar">
-      <element id="module-output" name="callapi.jvmMain" />
-    </root>
-  </artifact>
-</component>
