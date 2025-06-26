@@ -1,16 +1,18 @@
 package br.com.kmp.demo.demo.ui.screen
 
 import AlertDialogError
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
-import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.CloudOff
+import androidx.compose.material.icons.filled.WidthNormal
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -27,29 +30,41 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import br.com.kmp.demo.demo.Platform
+import br.com.kmp.demo.demo.getPlatform
+import br.com.kmp.demo.demo.model.Cat
+import br.com.kmp.demo.demo.ui.CatId
+import br.com.kmp.demo.demo.ui.Routes
 import br.com.kmp.demo.demo.ui.Routes.LISTCATSCREEN
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
 import br.com.kmp.demo.resources.Res
 import br.com.kmp.demo.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
+import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform.getKoin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailCatScreen(
-    navController: NavHostController,
-    idCat: Int) {
+fun ListCatsScreen(navController: NavHostController) {
 
     val scopeId = rememberSaveable { LISTCATSCREEN }
     val scope = remember(scopeId) {
-        getKoin().getScope(scopeId)
+        getKoin().getOrCreateScope(scopeId, named(LISTCATSCREEN))
     }
     val viewModel = remember { scope.get<MainScreenViewModel>() }
-    val state by viewModel.stateDetailCat.collectAsState()
-    viewModel.getCatById()
+
+    val state by viewModel.state.collectAsState()
+    viewModel.getCats()
+
+    DisposableEffect(Unit) {
+        onDispose {
+        }
+    }
 
     RegisterBackHandler  {
+        viewModel.clear()
+        getKoin().getScope(LISTCATSCREEN).close()
         navController.popBackStack()
     }
 
@@ -63,75 +78,92 @@ fun DetailCatScreen(
 
             TopAppBar(
                 actions = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = {  }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardReturn,
-                            contentDescription = "Backpressed"
+                            imageVector = Icons.Default.WidthNormal,
+                            contentDescription = "Localized description"
                         )
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = {  }) {
                         Icon(
                             imageVector = Icons.Default.CloudOff,
                             contentDescription = "Localized description"
                         )
                     }
                 },
-                title = { Text("Detail Cats") }
+                title = { Text("Felippe Cats") }
             )
 
             when(state){
-                is MainScreenViewModel.DetailCatUiState.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is MainScreenViewModel.DetailCatUiState.Error -> {
+                is MainScreenViewModel.MainUiState.Error -> {
 
-                    val errorText = (state as MainScreenViewModel.DetailCatUiState.Error).message
+                    val errorText = (state as MainScreenViewModel.MainUiState.Error).message
 
                     AlertDialogError(
                         icon = {
                             Icon(
-                                imageVector = Icons.Default.AttachMoney,
+                                painter= painterResource(Res.drawable.compose_multiplatform),
                                 contentDescription = "Icon of floating action button",
                                 modifier = Modifier.size(45.dp)
                             )
                         },
+                        onDismissRequest = { },
                         dialogTitle = "Atenção",
                         dialogText = errorText,
 
                         showBtnTextConfirm = true,
                         btnTextConfirm = "Tentar Novamente",
                         onConfirmation = {
-                            viewModel.getCatById()
+                            viewModel.getCats()
                         },
 
-                        showBtnTextDismiss = true,
-                        btnTextDismiss = "Voltar",
-                        onDismissRequest = {
-                            navController.popBackStack()
-                        },
+                        showBtnTextDismiss = false,
 
                         dismissOnBackPress = false,
                         dismissOnClickOutside = false,
                     )
                 }
-                is MainScreenViewModel.DetailCatUiState.SuccessGetCat -> {
+                is MainScreenViewModel.MainUiState.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is MainScreenViewModel.MainUiState.Success -> {
 
-                    val cat = (state as MainScreenViewModel.DetailCatUiState.SuccessGetCat).cat
-
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ){
-                        Text(text = cat.name, style = MaterialTheme.typography.bodyLarge)
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(text = cat.data.toString(), style = MaterialTheme.typography.bodyMedium)
-                        Spacer(modifier = Modifier.height(16.dp))
+                    val cats = (state as MainScreenViewModel.MainUiState.Success).cats
+                    LazyColumn {
+                        items(cats ) { cat ->
+                            CatListItem(
+                                cat = cat,
+                                onClick = {
+                                    viewModel.setCatClicked(cat)
+                                    navController.navigate(route = CatId(cat.id.toInt()) ) {
+                                        popUpTo<CatId>(){
+                                            inclusive = true
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                    }
+                                },
+                            )
+                        }
                     }
 
                 }
             }
         }
+
+    }
+}
+
+@Composable
+fun CatListItem(cat: Cat, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(16.dp)
+    ) {
+        Text(text = cat.name, style = MaterialTheme.typography.bodyLarge)
     }
 }

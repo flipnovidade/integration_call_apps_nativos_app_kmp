@@ -39,7 +39,7 @@ fun AlertDialogError(
             text = {
                 Text(text = dialogText)
             },
-            onDismissRequest = { onDismissRequest() },
+            onDismissRequest = { },
             confirmButton = {
                 if (showBtnTextConfirm){
                     TextButton( onClick = {

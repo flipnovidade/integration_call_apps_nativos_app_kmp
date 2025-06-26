@@ -64,6 +64,8 @@ kotlin {
             implementation("org.slf4j:slf4j-simple:$slf4jVersion")
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
             implementation(kotlin("stdlib"))
+            implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:${ktorVersion}")

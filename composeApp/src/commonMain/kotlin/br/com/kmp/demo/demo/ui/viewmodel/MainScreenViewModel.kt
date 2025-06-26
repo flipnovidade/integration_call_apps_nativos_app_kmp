@@ -2,21 +2,27 @@ package br.com.kmp.demo.demo.ui.viewmodel
 
 import br.com.kmp.demo.demo.di.usecase.CatsUseCase
 import br.com.kmp.demo.demo.model.Cat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import br.com.kmp.demo.demo.ui.components.KmpLogger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainScreenViewModel(
-    private val catsUseCase: CatsUseCase
+    private val catsUseCase: CatsUseCase,
+    kmpLogger: KmpLogger
 ) : BaseViewModel() {
 
     private val _state = MutableStateFlow<MainUiState>(MainUiState.Loading)
     val state: StateFlow<MainUiState> = _state
 
+    private val _stateDetailCat = MutableStateFlow<DetailCatUiState>(DetailCatUiState.Loading)
+    val stateDetailCat: StateFlow<DetailCatUiState> = _stateDetailCat
+
+    private var cat: Cat? = null
+
     init {
         getCats()
+        kmpLogger.e("MainScreenViewModel", "MainScreenViewModel created")
     }
 
     fun getCats(){
@@ -33,6 +39,22 @@ class MainScreenViewModel(
 //        CoroutineScope(Dispatchers.Default).launch {
 //
 //        }
+    }
+
+    fun getCatById(){
+        viewModelScope.launch {
+            try {
+                _stateDetailCat.value = DetailCatUiState.Loading
+                val result = catsUseCase.getCatById(cat?.id!!.toInt())
+                _stateDetailCat.value = DetailCatUiState.SuccessGetCat(result!!)
+            } catch (e: Exception) {
+                _stateDetailCat.value = DetailCatUiState.Error(e.message ?: "Erro desconhecido")
+            }
+        }
+    }
+
+    fun setCatClicked(cat: Cat){
+        this.cat = cat
     }
 
     fun insertCat(){
@@ -53,15 +75,16 @@ class MainScreenViewModel(
         }
     }
 
-    fun selectCat(post: Cat) {
-        _state.value = MainUiState.Selected(post)
-    }
-
     sealed class MainUiState {
         object Loading : MainUiState()
         data class Success(val cats: List<Cat>) : MainUiState()
         data class Error(val message: String) : MainUiState()
-        data class Selected(val post: Cat) : MainUiState()
+    }
+
+    sealed class DetailCatUiState {
+        object Loading : DetailCatUiState()
+        data class SuccessGetCat(val cat: Cat) : DetailCatUiState()
+        data class Error(val message: String) : DetailCatUiState()
     }
 
 }
