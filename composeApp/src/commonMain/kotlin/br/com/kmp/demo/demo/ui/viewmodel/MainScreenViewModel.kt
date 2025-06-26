@@ -3,6 +3,8 @@ package br.com.kmp.demo.demo.ui.viewmodel
 import br.com.kmp.demo.demo.di.usecase.CatsUseCase
 import br.com.kmp.demo.demo.model.Cat
 import br.com.kmp.demo.demo.ui.components.KmpLogger
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -11,6 +13,8 @@ class MainScreenViewModel(
     private val catsUseCase: CatsUseCase,
     kmpLogger: KmpLogger
 ) : BaseViewModel() {
+
+    var job: Job? = SupervisorJob()
 
     private val _state = MutableStateFlow<MainUiState>(MainUiState.Loading)
     val state: StateFlow<MainUiState> = _state
@@ -26,7 +30,8 @@ class MainScreenViewModel(
     }
 
     fun getCats(){
-        viewModelScope.launch {
+        job?.cancel()
+        job = viewModelScope.launch {
             try {
                 _state.value = MainUiState.Loading
                 val result = catsUseCase.getAllCats()
@@ -42,7 +47,8 @@ class MainScreenViewModel(
     }
 
     fun getCatById(){
-        viewModelScope.launch {
+        job?.cancel()
+        job = viewModelScope.launch {
             try {
                 _stateDetailCat.value = DetailCatUiState.Loading
                 val result = catsUseCase.getCatById(cat?.id!!.toInt())
