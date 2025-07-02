@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.androidLibrary
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -8,8 +6,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-//    kotlin("plugin.serialization") version "2.1.20" apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "2.1.20"
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -21,14 +19,24 @@ kotlin {
         }
     }
 
-    listOf(
+    applyDefaultHierarchyTemplate()
+    val iosTargets = listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    )
+    iosTargets.forEach { target ->
+        target.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+        }
+        target.compilations.getByName("main") {
+            cinterops {
+                val firebase by creating {
+                    definitionFile = file("src/iosMain/c_interop/firebase_remote_config.def")
+                    packageName = "br.com.kmp.remoteconfig"
+                }
+            }
         }
     }
 
@@ -43,6 +51,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation("io.ktor:ktor-client-okhttp:${ktorVersion}")
             implementation("io.insert-koin:koin-android:3.5.3")
+            implementation("com.google.firebase:firebase-config:22.1.1")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -70,10 +79,12 @@ kotlin {
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:${ktorVersion}")
         }
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
-
 
     }
 
@@ -114,5 +125,6 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.config.ktx)
     debugImplementation(compose.uiTooling)
 }

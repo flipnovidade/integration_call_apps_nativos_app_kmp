@@ -36,6 +36,7 @@ import br.com.kmp.demo.demo.model.Cat
 import br.com.kmp.demo.demo.ui.CatId
 import br.com.kmp.demo.demo.ui.Routes
 import br.com.kmp.demo.demo.ui.Routes.LISTCATSCREEN
+import br.com.kmp.demo.demo.ui.Routes.LISTITEMSCREEN
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
 import br.com.kmp.demo.resources.Res
@@ -86,7 +87,9 @@ fun ListCatsScreen(navController: NavHostController) {
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = {  }) {
+                    IconButton(onClick = {
+                        navController.navigate(LISTITEMSCREEN)
+                    }) {
                         Icon(
                             imageVector = Icons.Default.CloudOff,
                             contentDescription = "Localized description"

@@ -1,9 +1,4 @@
 package br.com.kmp.demo.demo.di
 
-import org.koin.core.context.startKoin
-
-fun initKoin() {
-    startKoin {
-        modules(sharedModule)
-    }
-}
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
+expect class KoinInit

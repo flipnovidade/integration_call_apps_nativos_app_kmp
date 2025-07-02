@@ -12,8 +12,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App(onNavHostReady: suspend (NavController) -> Unit = {}) {
 
-    startKoin()
-
     val navController = rememberNavController()
     AppNavigation(navController)
 

@@ -1,23 +1,10 @@
 package br.com.kmp.demo.demo
 
-import br.com.kmp.demo.demo.di.sharedModule
 import br.com.kmp.demo.demo.model.Cat
 import br.com.kmp.demo.demo.di.usecase.CatsUseCase
-import org.koin.core.KoinApplication
 import org.koin.core.context.stopKoin
-import org.koin.core.context.startKoin
 
-class ApiSdkCall {
-
-    private val useCase: CatsUseCase
-
-    init {
-        val koinApp: KoinApplication = startKoin {
-            modules(sharedModule)
-        }
-        val koin = koinApp.koin
-        useCase = koin.get<CatsUseCase>()
-    }
+class ApiSdkCall(private val useCase: CatsUseCase) {
 
     suspend fun getCats(): List<Cat> {
         return useCase.getAllCats()
