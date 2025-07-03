@@ -48,12 +48,8 @@ import org.koin.mp.KoinPlatform.getKoin
 @Composable
 fun ListItensScreen(navController: NavHostController) {
 
-
     val listItemsViewModel: ListItemScreenViewModel = remember { getKoin().get<ListItemScreenViewModel>() }
 
-    CoroutineScope(Dispatchers.Main).launch {
-        listItemsViewModel.getValueRemoteConfigs()
-    }
     var errorMessage by remember { mutableStateOf("") }
     var stepMessage by remember { mutableStateOf("") }
     var valueRemoteConfigs by remember { mutableStateOf(false) }

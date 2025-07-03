@@ -21,14 +21,13 @@ class ListItemScreenViewModel(
     val stateRemoteConfig: StateFlow<RemoteConfigUiState> = _stateRemoteConfig
     var jobRemoteConfig: Job? = SupervisorJob()
 
-//    init {
-//        kmpLogger.d("ListItemScreenViewModel", "init")
-//        firebaseRemoteConfigsBridge.fetchAndActivateFirebaseRemoteConfigs(2.0)
-//        viewModelScope.launch {
-//            getValueRemoteConfigs()
-//        }
-//    }
-
+    init {
+        kmpLogger.d("ListItemScreenViewModel", "init")
+        firebaseRemoteConfigsBridge.fetchAndActivateFirebaseRemoteConfigs(2.0)
+        viewModelScope.launch {
+            getValueRemoteConfigs()
+        }
+    }
 
     suspend fun getValueRemoteConfigs() {
         jobRemoteConfig?.cancel()
