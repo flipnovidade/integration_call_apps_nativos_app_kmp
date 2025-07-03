@@ -25,5 +25,5 @@ fun moduleIos(delegate: SwiftFirebaseRemoteConfig) = module {
         scoped { MainScreenViewModel(get(), get()) }
     }
     single<FirebaseRemoteConfigs> { FirebaseRemoteConfigsBridge(delegate) }
-    single { ListItemScreenViewModel(get(), get()) }
+    factory { ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get()) }
 }
