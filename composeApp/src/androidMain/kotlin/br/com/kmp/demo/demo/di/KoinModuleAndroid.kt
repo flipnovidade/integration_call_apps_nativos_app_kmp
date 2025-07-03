@@ -24,5 +24,5 @@ fun moduleAndroid() = module {
         scoped { MainScreenViewModel(get(), get()) }
     }
     single<FirebaseRemoteConfigs> { FirebaseRemoteConfigsBridge() }
-    single { ListItemScreenViewModel(get(), get()) }
+    single { ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get()) }
 }

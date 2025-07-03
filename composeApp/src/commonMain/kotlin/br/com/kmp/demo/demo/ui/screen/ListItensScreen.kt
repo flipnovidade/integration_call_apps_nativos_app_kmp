@@ -1,5 +1,6 @@
 package br.com.kmp.demo.demo.ui.screen
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,24 +18,57 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import br.com.kmp.demo.demo.ui.Routes.LISTITEMSCREEN
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
-import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
-import org.koin.mp.KoinPlatform.getKoin
 import br.com.kmp.demo.demo.ui.components.AppColors
+import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.core.qualifier.named
+import org.koin.mp.KoinPlatform.getKoin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListItensScreen(navController: NavHostController) {
 
-    //val viewModel: ListItemScreenViewModel  = getKoin().get()
+
+    val listItemsViewModel: ListItemScreenViewModel = remember { getKoin().get<ListItemScreenViewModel>() }
+
+    CoroutineScope(Dispatchers.Main).launch {
+        listItemsViewModel.getValueRemoteConfigs()
+    }
+    var errorMessage by remember { mutableStateOf("") }
+    var stepMessage by remember { mutableStateOf("") }
+    var valueRemoteConfigs by remember { mutableStateOf(false) }
+    val stateRemoteConfig: ListItemScreenViewModel.RemoteConfigUiState by listItemsViewModel.stateRemoteConfig.collectAsState()
+    when(stateRemoteConfig){
+        is ListItemScreenViewModel.RemoteConfigUiState.Error -> {
+            errorMessage = (stateRemoteConfig as ListItemScreenViewModel.RemoteConfigUiState.Error).message
+        }
+        is ListItemScreenViewModel.RemoteConfigUiState.Loading -> {
+            stepMessage = (stateRemoteConfig as ListItemScreenViewModel.RemoteConfigUiState.Loading).step
+        }
+        is ListItemScreenViewModel.RemoteConfigUiState.Success -> {
+            valueRemoteConfigs = (stateRemoteConfig as ListItemScreenViewModel.RemoteConfigUiState.Success).valueRemoteConfig
+        }
+    }
 
     DisposableEffect(Unit) {
         onDispose {
@@ -76,17 +110,35 @@ fun ListItensScreen(navController: NavHostController) {
             )
 
             Card(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().border(
+                    width = 2.dp,
+                    color = AppColors.blueDark,
+                    shape = RoundedCornerShape(16.dp)
+                ),
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = AppColors.Gray,
-                    contentColor = AppColors.DarkGray
+                    containerColor = AppColors.blueLight,
+                    contentColor = AppColors.blueNormal
                 ),
                 elevation = CardDefaults.cardElevation()
             ) {
                 Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                     Spacer(Modifier.height(8.dp))
-                    Text("List teach")
+                    Text(text = "Remote config value $errorMessage",
+                        color = AppColors.blackNormal)
+                    Text(text = stepMessage,
+                        color = AppColors.blackNormal)
+                    Switch(
+                        checked = valueRemoteConfigs,
+                        onCheckedChange = {  },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = AppColors.blueLight,
+                            uncheckedThumbColor = AppColors.blueNormal,
+                            disabledCheckedThumbColor = AppColors.blueLight,
+                            disabledCheckedTrackColor = AppColors.blueNormal
+                        ),
+                        enabled = false,
+                    )
                 }
             }
 

@@ -1,3 +1,7 @@
 package br.com.kmp.demo.demo.firebase
 
-expect class FirebaseRemoteConfigsBridge
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
+expect class FirebaseRemoteConfigsBridge : FirebaseRemoteConfigs {
+    override fun fetchAndActivateFirebaseRemoteConfigs(fetchIntervalInSeconds: Double)
+    override fun getRemoteConfigString(key: String): String?
+}

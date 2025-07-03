@@ -26,7 +26,7 @@ struct iOSApp: App {
 //        koinInit.doInitKoin(delegate: remoteConfigBridge)
         let delegate = SwiftFirebaseRemoteConfig()
         
-//        let koin = ComposeApp.KoinInit(delegate: delegate)
+//       let koin = ComposeApp.KoinInit(delegate: delegate)
 //        let koin = KoinInit(delegate: delegate)
 //        koin.doInitKoin(delegate: delegate)
         

@@ -20,10 +20,13 @@ Projeto:
 *  Ktor
 *  Navigation
 *  Material-ICons
+*  Logs
 
 ->Android
+*  Firebase Remote-Config
 
 ->Ios
+*  Firebase Remote-Config
 
 
 

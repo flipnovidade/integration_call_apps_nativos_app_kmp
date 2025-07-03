@@ -56,7 +56,7 @@ fun ListCatsScreen(navController: NavHostController) {
     val viewModel = remember { scope.get<MainScreenViewModel>() }
 
     val state by viewModel.state.collectAsState()
-    viewModel.getCats()
+    //viewModel.getCats()
 
     DisposableEffect(Unit) {
         onDispose {

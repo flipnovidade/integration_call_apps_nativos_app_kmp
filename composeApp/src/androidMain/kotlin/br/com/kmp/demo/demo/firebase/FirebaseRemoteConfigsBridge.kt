@@ -9,7 +9,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 actual class FirebaseRemoteConfigsBridge : FirebaseRemoteConfigs {
     private val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
 
-    override fun fetchAndActivateFirebaseRemoteConfigs(fetchIntervalInSeconds: Double) {
+    actual override fun fetchAndActivateFirebaseRemoteConfigs(fetchIntervalInSeconds: Double) {
         val configSettings = remoteConfigSettings {
             minimumFetchIntervalInSeconds = fetchIntervalInSeconds.toLong()
         }
@@ -17,7 +17,7 @@ actual class FirebaseRemoteConfigsBridge : FirebaseRemoteConfigs {
         remoteConfig.fetchAndActivate()
     }
 
-    override fun getRemoteConfigString(key: String): String? {
+    actual override fun getRemoteConfigString(key: String): String? {
         return remoteConfig.getString(key)
     }
 
