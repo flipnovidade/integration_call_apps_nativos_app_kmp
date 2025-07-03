@@ -28,27 +28,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import br.com.kmp.demo.demo.ui.Routes.LISTITEMSCREEN
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.components.AppColors
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.koin.core.qualifier.named
-import org.koin.mp.KoinPlatform.getKoin
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListItensScreen(navController: NavHostController) {
-
-    val listItemsViewModel: ListItemScreenViewModel = remember { getKoin().get<ListItemScreenViewModel>() }
+fun ListItensScreen(
+    navController: NavHostController,
+    listItemsViewModel: ListItemScreenViewModel = koinInject<ListItemScreenViewModel>() ) {
 
     var errorMessage by remember { mutableStateOf("") }
     var stepMessage by remember { mutableStateOf("") }
@@ -72,6 +66,7 @@ fun ListItensScreen(navController: NavHostController) {
     }
 
     RegisterBackHandler  {
+        listItemsViewModel.clear()
         navController.popBackStack()
     }
 

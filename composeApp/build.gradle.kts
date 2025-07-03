@@ -43,7 +43,7 @@ kotlin {
     sourceSets {
         val ktorVersion = "3.1.3"
         val coroutinesVersion = "1.8.0"
-        val koinVersion = "3.5.0"
+        val koinVersion = "4.1.0"
         val slf4jVersion = "2.0.13"
 
         androidMain.dependencies {
@@ -61,13 +61,16 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation("io.insert-koin:koin-core:$koinVersion")
+            implementation("io.insert-koin:koin-compose:$koinVersion")
+            implementation("io.insert-koin:koin-compose-viewmodel:$koinVersion")
+
             implementation("io.ktor:ktor-client-core:$ktorVersion")
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
             implementation("io.ktor:ktor-client-logging:$ktorVersion")
             implementation("io.ktor:ktor-client-cio:${ktorVersion}")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-            implementation("io.insert-koin:koin-core:$koinVersion")
             implementation("org.slf4j:slf4j-simple:$slf4jVersion")
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
             implementation(kotlin("stdlib"))
