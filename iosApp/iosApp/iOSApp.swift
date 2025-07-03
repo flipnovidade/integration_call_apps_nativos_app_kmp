@@ -7,29 +7,13 @@ struct iOSApp: App {
 
     init() {
         FirebaseApp.configure()
-//        ComposeApp.KoinInit.init(delegate: SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit()
-//        ComposeApp.KoinInit().initKoin(delegate: SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit().doInitKoin(delegate: SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit().doInitKoinDelegate(SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit().doInitKoinDelegate(delegate: SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit()
-//        ComposeApp.KoinInit(delegate: SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit(delegate: SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit().doInitKoinDelegate(delegate: SwiftFirebaseRemoteConfig())
-//        ComposeApp.KoinInit().doInitKoinDelegate(delegate: SwiftFirebaseRemoteConfig())
         
-//        let swiftRemoteConfig = SwiftFirebaseRemoteConfig()
-//        let remoteConfigBridge = ComposeAppFirebaseRemoteConfigsBridge(delegate: swiftRemoteConfig)
-//
-//        let koinInit = ComposeAppKoinInit()
-//        koinInit.doInitKoin(delegate: remoteConfigBridge)
-        let delegate = SwiftFirebaseRemoteConfig()
+        let swiftFirebaseRemoteConfig = SwiftFirebaseRemoteConfig()
+        KoinInitKt.someFunctionThatNeedsSwift(isVercade: true)
         
-//       let koin = ComposeApp.KoinInit(delegate: delegate)
-//        let koin = KoinInit(delegate: delegate)
-//        koin.doInitKoin(delegate: delegate)
-        
+//        KoinInitKt.someFunctionThatNeedsSwiftToRead(delegate: swiftFirebaseRemoteConfig)
+//        ComposeApp.KoinInit(delegate: swiftFirebaseRemoteConfig)
+//        ComposeApp.KoinInit(delegate: swiftFirebaseRemoteConfig).doKoInitKoin(delegate: swiftFirebaseRemoteConfig)
         
     }
 
