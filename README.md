@@ -49,5 +49,5 @@ Projeto:
 🗺️ Mapas com localização do usuário e pontos de interesse\
 💳 Multiplos meios de pagamento e carteiras digitais\
 🔐 Autenticação segura + biometria\
-🔔 Notificações push\
+🔔 Notificações push
 
