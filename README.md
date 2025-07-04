@@ -10,7 +10,7 @@ Tendo assim uma arquitetura de api centralizada e todo um ecossitema completo.
 Projeto utilizado apenas para aprendizagem.\
 
 
-Projeto:\
+Projeto:
 
 
 
@@ -22,27 +22,25 @@ Projeto:\
 *  Navigation
 *  Material-ICons
 *  Logs
-\
-\
+* 
+* 
+
 -> Android
 *  Firebase Remote-Config
 * 
 * 
-\
 
 -> Ios
 *  Firebase Remote-Config
-* \
-* \
-\
+* 
+* 
 
 ->API
 ✨ Restful-api-dev (https://restful-api.dev/)
-\
 
 
 * TODO: escreva aqui seu desafio\
-✅ Consultar API\
+✅ Consultar API Ktor\
 ✅ DI via Koin\
 ✅ Firebase Remote Config\
 🧩 Firebase Real Time DataBase\
@@ -52,4 +50,4 @@ Projeto:\
 💳 Multiplos meios de pagamento e carteiras digitais\
 🔐 Autenticação segura + biometria\
 🔔 Notificações push\
-\
+
