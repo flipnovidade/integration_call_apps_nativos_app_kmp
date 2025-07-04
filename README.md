@@ -7,7 +7,7 @@ Resumo:\
 Projeto de app em KMP em que todos os mobiles possam consumir, deixando centralizada as chamadas de api.
 Mostrar que independente a plataforma nativa é possivel consumir a api em KMP.
 Tendo assim uma arquitetura de api centralizada e todo um ecossitema completo.
-Projeto utilizado apenas para aprendizagem.\
+Projeto utilizado apenas para aprendizagem.
 
 
 Projeto:
@@ -39,7 +39,7 @@ Projeto:
 ✨ Restful-api-dev (https://restful-api.dev/)
 
 
-* TODO: escreva aqui seu desafio\
+* TODO: Escreva aqui seu desafio:\
 ✅ Consultar API Ktor\
 ✅ DI via Koin\
 ✅ Firebase Remote Config\
