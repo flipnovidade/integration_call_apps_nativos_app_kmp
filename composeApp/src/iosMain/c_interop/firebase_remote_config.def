@@ -1,6 +1,3 @@
 language = Objective-C
 headers = /Users/felippeferreira/Desktop/projeto_youtube/integration_call_apps_nativos_app_kmp/iosApp/iosApp/InteropHeaders/SwiftFirebaseRemoteConfig.h
 package = br.com.kmp.remoteconfig
-compilerOpts = -framework FirebaseCore -framework FirebaseRemoteConfig
-excludeDependentModules = true
-linkerOpts.osx = -framework FirebaseCore -framework FirebaseRemoteConfig -framework ComposeApp

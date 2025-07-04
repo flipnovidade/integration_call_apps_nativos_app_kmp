@@ -11,7 +11,7 @@ struct iOSApp: App {
         let swiftFirebaseRemoteConfig = SwiftFirebaseRemoteConfig()
         KoinInitKt.someFunctionThatNeedsSwift(isVercade: true)
         
-//        KoinInitKt.someFunctionThatNeedsSwiftToRead(delegate: swiftFirebaseRemoteConfig)
+//        KoinInitKt.someFunctionThatNeedsSwiftToRead(firebaseRemoteconfig: swiftFirebaseRemoteConfig)
 //        ComposeApp.KoinInit(delegate: swiftFirebaseRemoteConfig)
 //        ComposeApp.KoinInit(delegate: swiftFirebaseRemoteConfig).doKoInitKoin(delegate: swiftFirebaseRemoteConfig)
         

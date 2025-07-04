@@ -31,8 +31,10 @@ fun someFunctionThatNeedsSwift(isVercade: Boolean) {
     KmpLogger.d("someFunctionThatNeedsSwift", "receiver delegate $isVercade")
 }
 
-fun someFunctionThatNeedsSwiftToRead(delegate: SwiftFirebaseRemoteConfig) {
-    KmpLogger.d("someFunctionThatNeedsSwift", "receiver delegate")
+fun someFunctionThatNeedsSwiftToRead(firebaseRemoteconfig: SwiftFirebaseRemoteConfig) {
+    KmpLogger.d("someFunctionThatNeedsSwift", "receiver delegate amem")
+    val swiftFirebaseRemoteConfig: SwiftFirebaseRemoteConfig = (firebaseRemoteconfig)
+    KoinInit(delegate = swiftFirebaseRemoteConfig)
 }
 
 
