@@ -32,12 +32,16 @@ kotlin {
         }
         target.compilations.getByName("main") {
             cinterops {
-                val firebase by creating {
-                    definitionFile = file("src/iosMain/c_interop/firebase_remote_config.def")
-                    packageName = "br.com.kmp.remoteconfig"
-                }
+//                val firebase by creating {
+//                    definitionFile = file("src/iosMain/c_interop/firebase_remote_config.def")
+//                    packageName = "br.com.kmp.remoteconfig"
+//                }
             }
         }
+    }
+
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
+        compilations["main"].compilerOptions.options.freeCompilerArgs.add("-Xexport-kdoc")
     }
 
     sourceSets {
@@ -81,7 +85,7 @@ kotlin {
             implementation("io.ktor:ktor-client-darwin:${ktorVersion}")
         }
         all {
-            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+//            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

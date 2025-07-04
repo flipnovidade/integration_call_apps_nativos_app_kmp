@@ -11,11 +11,10 @@ import br.com.kmp.demo.demo.ui.Routes.LISTCATSCREEN
 import br.com.kmp.demo.demo.ui.components.KmpLogger
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
-import br.com.kmp.remoteconfig.SwiftFirebaseRemoteConfig
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-fun moduleIos(delegate: SwiftFirebaseRemoteConfig) = module {
+fun moduleIos(delegate: FirebaseRemoteConfigs) = module {
     single { createHttpClientFactory() }
     single<CatsRepository> { CatRepositoryImple(get()) }
     single { CatsUseCase(get()) }

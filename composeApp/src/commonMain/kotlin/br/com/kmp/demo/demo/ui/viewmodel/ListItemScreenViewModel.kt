@@ -1,10 +1,7 @@
 package br.com.kmp.demo.demo.ui.viewmodel
 
-import br.com.kmp.demo.demo.di.usecase.CatsUseCase
 import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigsBridge
-import br.com.kmp.demo.demo.model.Cat
 import br.com.kmp.demo.demo.ui.components.KmpLogger
-import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel.MainUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay

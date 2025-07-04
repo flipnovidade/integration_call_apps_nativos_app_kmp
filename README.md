@@ -42,3 +42,13 @@ Projeto:
 * 
 * 
 * TODO// escreva aqui seu desafio
+✅ Consultar API
+✅ DI via Koin
+✅ Firebase Remote Config
+🧩 Firebase Real Time DataBase
+⚙️ SharedPreference, EncryptedSharedPreferences e KeychainSettings
+📸 Foto com câmera + galeria
+🗺️ Mapas com localização do usuário e pontos de interesse
+💳 Multiplos meios de pagamento e carteiras digitais
+🔐 Autenticação segura + biometria
+🔔 Notificações push

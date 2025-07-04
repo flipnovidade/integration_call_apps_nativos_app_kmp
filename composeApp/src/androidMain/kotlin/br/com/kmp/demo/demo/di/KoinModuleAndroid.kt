@@ -20,12 +20,10 @@ fun moduleAndroid() = module {
     single { CatsUseCase(get()) }
     single { ApiSdkCall(get()) }
     single { KmpLogger }
-
     scope(named(LISTCATSCREEN)) {
         scoped { MainScreenViewModel(get(), get()) }
     }
 
     single<FirebaseRemoteConfigs> { FirebaseRemoteConfigsBridge() }
     factory {  ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get()) }
-
 }
