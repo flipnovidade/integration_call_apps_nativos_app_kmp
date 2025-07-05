@@ -5,9 +5,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import br.com.kmp.demo.demo.ui.Routes.FIREBASEDATABASEREALTIMESSCREEN
 import br.com.kmp.demo.demo.ui.Routes.LISTCATSCREEN
 import br.com.kmp.demo.demo.ui.Routes.LISTITEMSCREEN
 import br.com.kmp.demo.demo.ui.screen.DetailCatScreen
+import br.com.kmp.demo.demo.ui.screen.FirebaseRealTimeDataBaseScreen
 import br.com.kmp.demo.demo.ui.screen.ListCatsScreen
 import br.com.kmp.demo.demo.ui.screen.ListItensScreen
 import kotlinx.serialization.Serializable
@@ -29,12 +31,17 @@ fun AppNavigation(navController: NavHostController) {
             ListItensScreen(navController)
         }
 
+        composable(FIREBASEDATABASEREALTIMESSCREEN) {
+            FirebaseRealTimeDataBaseScreen(navController)
+        }
+
     }
 }
 
 object Routes {
     const val LISTCATSCREEN = "listscreen"
     const val LISTITEMSCREEN = "listitensscreen"
+    const val FIREBASEDATABASEREALTIMESSCREEN = "firebasedatabaserealtimesscreen"
 }
 
 @Serializable

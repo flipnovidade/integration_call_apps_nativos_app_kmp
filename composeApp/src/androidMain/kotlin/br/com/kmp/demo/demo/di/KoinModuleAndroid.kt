@@ -5,10 +5,13 @@ import br.com.kmp.demo.demo.di.repository.CatsRepository
 import br.com.kmp.demo.demo.di.usecase.CatsUseCase
 import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigs
 import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigsBridge
+import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseDataBaseRealTimeBridge
+import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseRealTimeDataBase
 import br.com.kmp.demo.demo.network.createHttpClientFactory
 import br.com.kmp.demo.demo.repository.CatRepositoryImple
 import br.com.kmp.demo.demo.ui.Routes.LISTCATSCREEN
 import br.com.kmp.demo.demo.ui.components.KmpLogger
+import br.com.kmp.demo.demo.ui.viewmodel.FirebaseRealTimeDataBaseViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
 import org.koin.core.qualifier.named
@@ -26,4 +29,8 @@ fun moduleAndroid() = module {
 
     single<FirebaseRemoteConfigs> { FirebaseRemoteConfigsBridge() }
     factory {  ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get()) }
+
+    single<FirebaseRealTimeDataBase> { FirebaseDataBaseRealTimeBridge() }
+    factory { FirebaseRealTimeDataBaseViewModel(get<FirebaseRealTimeDataBase>() as FirebaseDataBaseRealTimeBridge, get()) }
+
 }

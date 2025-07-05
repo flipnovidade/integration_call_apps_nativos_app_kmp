@@ -9,7 +9,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 @Suppress(names = ["EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING"])
-actual class FirebaseRemoteConfigsBridgeBridge : FirebaseRealTimeDataBase {
+actual class FirebaseDataBaseRealTimeBridge : FirebaseRealTimeDataBase {
 
     private val myFireBaseDataBase: FirebaseDatabase = Firebase.database
 

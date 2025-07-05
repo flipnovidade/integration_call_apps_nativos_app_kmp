@@ -33,8 +33,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import br.com.kmp.demo.demo.ui.Routes.FIREBASEDATABASEREALTIMESSCREEN
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.components.AppColors
+import br.com.kmp.demo.demo.ui.components.ImageFromUrl
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import org.koin.compose.koinInject
 
@@ -130,6 +132,31 @@ fun ListItensScreen(
                         ),
                         enabled = false,
                     )
+                }
+            }
+
+            Spacer(Modifier.height(20.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth().border(
+                    width = 2.dp,
+                    color = AppColors.blueDark,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = AppColors.blueLight,
+                    contentColor = AppColors.blueNormal
+                ),
+                elevation = CardDefaults.cardElevation(),
+                onClick = { navController.navigate(FIREBASEDATABASEREALTIMESSCREEN) }
+            ) {
+                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(text = "Real time Data Base ", color = AppColors.blackNormal)
+                    Text(text = "Nodo default message", color = AppColors.blackNormal)
+                    Spacer(Modifier.height(10.dp))
+                    ImageFromUrl()
                 }
             }
 
