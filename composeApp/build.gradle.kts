@@ -55,7 +55,10 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation("io.ktor:ktor-client-okhttp:${ktorVersion}")
             implementation("io.insert-koin:koin-android:3.5.3")
+
             implementation("com.google.firebase:firebase-config:22.1.1")
+            implementation("com.google.firebase:firebase-database:21.0.0")
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
