@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A8020E3C2E1AFD1800ABCECD /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = A8020E3B2E1AFD1800ABCECD /* FirebaseDatabase */; };
 		A81BCF8D2E154AD900E5E113 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A81BCF8C2E154AD900E5E113 /* FirebaseCore */; };
 		A8DADA5D2E0DCE8500581513 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = A8DADA5C2E0DCE8500581513 /* FirebaseRemoteConfig */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8020E3C2E1AFD1800ABCECD /* FirebaseDatabase in Frameworks */,
 				A81BCF8D2E154AD900E5E113 /* FirebaseCore in Frameworks */,
 				A8DADA5D2E0DCE8500581513 /* FirebaseRemoteConfig in Frameworks */,
 			);
@@ -94,6 +96,7 @@
 			packageProductDependencies = (
 				A8DADA5C2E0DCE8500581513 /* FirebaseRemoteConfig */,
 				A81BCF8C2E154AD900E5E113 /* FirebaseCore */,
+				A8020E3B2E1AFD1800ABCECD /* FirebaseDatabase */,
 			);
 			productName = iosApp;
 			productReference = B9DA97B12DC1472C00A4DA20 /* demo.app */;
@@ -401,6 +404,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A8020E3B2E1AFD1800ABCECD /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8DADA5B2E0DCE8500581513 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
 		A81BCF8C2E154AD900E5E113 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A8DADA5B2E0DCE8500581513 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

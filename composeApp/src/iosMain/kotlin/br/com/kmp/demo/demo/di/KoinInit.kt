@@ -1,6 +1,7 @@
 package br.com.kmp.demo.demo.di
 
 import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigs
+import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseRealTimeDataBase
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExportObjCClass
 import org.koin.core.context.startKoin
@@ -12,10 +13,13 @@ import kotlin.experimental.ExperimentalObjCName
 @ExportObjCClass
 actual class KoinInit() {
 
-    fun initKoin(delegate: FirebaseRemoteConfigs) {
+    fun initKoin(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
+                 delegateFirebaseRealTimeDataBase: FirebaseRealTimeDataBase) {
+
         startKoin {
-            modules(modules = moduleIos(delegate))
+            modules(modules = moduleIos(delegateFirebaseRemoteConfigs, delegateFirebaseRealTimeDataBase))
         }
+
     }
 
 }

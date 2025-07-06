@@ -9,7 +9,11 @@ struct iOSApp: App {
         FirebaseApp.configure()
         
         let swiftFirebaseRemoteConfig = SwiftFirebaseRemoteConfig()
-        ComposeApp.KoinInit().doInitKoin(delegate: swiftFirebaseRemoteConfig)
+        let swiftFirebaseDataBaseRealTime = SwiftFirebaseDataBaseRealTime()
+        ComposeApp.KoinInit().doInitKoin(
+            delegateFirebaseRemoteConfigs: swiftFirebaseRemoteConfig,
+            delegateFirebaseRealTimeDataBase: swiftFirebaseDataBaseRealTime
+        )
     }
 
     var body: some Scene {
