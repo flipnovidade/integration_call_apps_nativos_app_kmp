@@ -17,48 +17,78 @@ class FirebaseRealTimeDataBaseViewModel(
     private val _nodo = MutableStateFlow<String>( "messages")
     val nodo: StateFlow<String> = _nodo
 
-    private val _stateSnapShotFiebaseDataBaseRealtimeByNodo = MutableStateFlow<GetRealTimeDataBaseUiState>(GetRealTimeDataBaseUiState.Loading(step = "loading"))
-    val stateSnapShotFiebaseDataBaseRealtimeByNodo: StateFlow<GetRealTimeDataBaseUiState> = _stateSnapShotFiebaseDataBaseRealtimeByNodo
-    var jobRemoteConfig: Job? = SupervisorJob()
+    private val _stateSnapShotFiebaseDataBaseRealTimeByNodo = MutableStateFlow<GetRealTimeDataBaseUiState>(GetRealTimeDataBaseUiState.Loading(step = ""))
+    val stateSnapShotFiebaseDataBaseRealTimeByNodo: StateFlow<GetRealTimeDataBaseUiState> = _stateSnapShotFiebaseDataBaseRealTimeByNodo
+    var jobGetSnaptShotFirebaseDataBaseRealTime: Job? = SupervisorJob()
+
+
+    private val _statePutFiebaseDataBaseRealTimeByNodo = MutableStateFlow<PutRealTimeDataBaseUiState>(PutRealTimeDataBaseUiState.Idle)
+    val statePutFiebaseDataBaseRealTimeByNodo: StateFlow<PutRealTimeDataBaseUiState> = _statePutFiebaseDataBaseRealTimeByNodo
+    var jobPutDataFirebaseDataBaseRealTime: Job? = SupervisorJob()
 
     init {
         kmpLogger.d("FirebaseRealTimeDataBaseViewModel", "init")
         viewModelScope.launch {
-            getSnapShotFiebaseDataBaseRealtime()
+            getSnapShotFirebaseDataBaseRealTime(nodoName = nodo.value)
+        }
+    }
+    
+    fun putDataFirebaseDataBaseRealTime(nodoName: String, keyNewNodo: String, valueForNodo: String){
+        jobPutDataFirebaseDataBaseRealTime?.cancel()
+        jobPutDataFirebaseDataBaseRealTime = viewModelScope.launch {
+            try {
+
+                if(nodoName != nodo.value){
+                    _nodo.value = nodoName
+                    getSnapShotFirebaseDataBaseRealTime(nodoName = nodoName)
+                }
+
+                delay(timeMillis = 1000)
+                firebaseDataBaseRealTimeBridge.putDataByNodoName(nodoName = nodoName, keyNewNodo = keyNewNodo, valueForNodo = valueForNodo)
+                delay(timeMillis = 100)
+
+            }catch (exception: Exception){
+                _statePutFiebaseDataBaseRealTimeByNodo.value = PutRealTimeDataBaseUiState.Error(exception.message.toString())
+                delay(timeMillis = 100)
+            }
+
         }
     }
 
-    suspend fun getSnapShotFiebaseDataBaseRealtime(){
-        jobRemoteConfig?.cancel()
-        jobRemoteConfig = viewModelScope.launch {
+    fun getSnapShotFirebaseDataBaseRealTime(nodoName: String) {
+        jobGetSnaptShotFirebaseDataBaseRealTime?.cancel()
+        jobGetSnaptShotFirebaseDataBaseRealTime = viewModelScope.launch {
             try {
-                _stateSnapShotFiebaseDataBaseRealtimeByNodo.value = GetRealTimeDataBaseUiState.Loading()
+                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading()
                 delay(timeMillis = 100)
                 firebaseDataBaseRealTimeBridge.fetchDataNodo(
-                    nodoName = nodo.value,
+                    nodoName = nodoName,
                     onSuccess = { it ->
-                        KmpLogger.d("getSnapShotFiebaseDataBaseRealtime", "Value is: $it")
-                        _stateSnapShotFiebaseDataBaseRealtimeByNodo.value = GetRealTimeDataBaseUiState.Success(it)
+                        _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Success(it)
                     },
                     onError =  { exception ->
-                        _stateSnapShotFiebaseDataBaseRealtimeByNodo.value = GetRealTimeDataBaseUiState.Error(exception.message.toString())
+                        _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Error(exception.message.toString())
                     }
                 )
                 delay(timeMillis = 100)
-                _stateSnapShotFiebaseDataBaseRealtimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
+                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
             }catch (exception: Exception){
-                _stateSnapShotFiebaseDataBaseRealtimeByNodo.value = GetRealTimeDataBaseUiState.Error(exception.message.toString())
+                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Error(exception.message.toString())
                 delay(timeMillis = 100)
-                _stateSnapShotFiebaseDataBaseRealtimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
+                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
             }
         }
     }
 
     sealed class GetRealTimeDataBaseUiState {
         data class Loading(val step: String = "loading") : GetRealTimeDataBaseUiState()
-        data class Success(val valueSnapShot: String = "") : GetRealTimeDataBaseUiState()
         data class Error(val message: String = "") : GetRealTimeDataBaseUiState()
+        data class Success(val valueSnapShot: String = "") : GetRealTimeDataBaseUiState()
     }
 
+    sealed class PutRealTimeDataBaseUiState {
+        object Idle : PutRealTimeDataBaseUiState()
+        data class Error(val message: String = "") : PutRealTimeDataBaseUiState()
+    }
 
 }

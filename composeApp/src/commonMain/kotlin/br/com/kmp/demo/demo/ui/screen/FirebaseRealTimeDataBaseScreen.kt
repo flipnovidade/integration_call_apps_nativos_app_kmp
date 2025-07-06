@@ -29,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +43,10 @@ import br.com.kmp.demo.demo.ui.components.AppColors
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.viewmodel.FirebaseRealTimeDataBaseViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import org.koin.core.component.getScopeName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,18 +58,31 @@ fun FirebaseRealTimeDataBaseScreen(
     var nodoValue: String by remember { mutableStateOf(firebaseRealTimeDataBaseViewModel.nodo.value ) }
     var keyByKeyNodo: String by remember { mutableStateOf("") }
     var valueByKeyNodo: String by remember { mutableStateOf("") }
-    val stateRealTimeDataBaseViewModel: FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState by firebaseRealTimeDataBaseViewModel.stateSnapShotFiebaseDataBaseRealtimeByNodo.collectAsState()
-    when(stateRealTimeDataBaseViewModel){
+    val stateRealTimeDataBaseViewModel: FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState by firebaseRealTimeDataBaseViewModel.stateSnapShotFiebaseDataBaseRealTimeByNodo.collectAsState()
+    snapShotNodoValue = when(stateRealTimeDataBaseViewModel){
         is FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Error -> {
-            snapShotNodoValue =  (stateRealTimeDataBaseViewModel as FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Error).message
+            (stateRealTimeDataBaseViewModel as FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Error).message
         }
         is FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Loading ->  {
-            snapShotNodoValue =  (stateRealTimeDataBaseViewModel as FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Loading).step
+            (stateRealTimeDataBaseViewModel as FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Loading).step
         }
         is FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Success ->  {
-            snapShotNodoValue =  (stateRealTimeDataBaseViewModel as FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Success).valueSnapShot
+            (stateRealTimeDataBaseViewModel as FirebaseRealTimeDataBaseViewModel.GetRealTimeDataBaseUiState.Success).valueSnapShot
         }
     }
+
+    var errorMessagePut: String by remember { mutableStateOf("") }
+    val statePutRealTimeDataBaseViewModel: FirebaseRealTimeDataBaseViewModel.PutRealTimeDataBaseUiState by firebaseRealTimeDataBaseViewModel.statePutFiebaseDataBaseRealTimeByNodo.collectAsState()
+    errorMessagePut = when (statePutRealTimeDataBaseViewModel){
+        is FirebaseRealTimeDataBaseViewModel.PutRealTimeDataBaseUiState.Error -> {
+            (statePutRealTimeDataBaseViewModel as FirebaseRealTimeDataBaseViewModel.PutRealTimeDataBaseUiState.Error) .message
+        }
+        FirebaseRealTimeDataBaseViewModel.PutRealTimeDataBaseUiState.Idle ->  {
+            ""
+        }
+    }
+
+    val coroutineScope = rememberCoroutineScope()
 
     DisposableEffect(Unit) {
         onDispose {
@@ -126,7 +143,7 @@ fun FirebaseRealTimeDataBaseScreen(
                     Text(text = "HERE -> $snapShotNodoValue", color = AppColors.blackNormal)
 
                     Spacer(Modifier.height(60.dp))
-                    Text(text = "Add ", color = AppColors.blackNormal)
+                    Text(text = "Add $errorMessagePut", color = AppColors.blackNormal)
 
                     Spacer(Modifier.height(10.dp))
                     Text(text = "Nodo", color = AppColors.blackNormal)
@@ -183,7 +200,13 @@ fun FirebaseRealTimeDataBaseScreen(
                     )
 
                     Spacer(Modifier.height(10.dp))
-                    Button(onClick = {  }) {
+                    Button(onClick = {
+                            firebaseRealTimeDataBaseViewModel.putDataFirebaseDataBaseRealTime(
+                                nodoName = nodoValue,
+                                keyNewNodo = keyByKeyNodo,
+                                valueForNodo = valueByKeyNodo,
+                            )
+                    }) {
                         Text(text = "Click add value", color = AppColors.whiteNormal)
                     }
 

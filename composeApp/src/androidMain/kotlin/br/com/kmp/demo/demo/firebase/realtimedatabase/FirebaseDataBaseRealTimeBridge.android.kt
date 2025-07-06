@@ -20,7 +20,7 @@ actual class FirebaseDataBaseRealTimeBridge : FirebaseRealTimeDataBase {
         myFireBaseDataBase.getReference( nodoName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    KmpLogger.d("fetchDataNodo", "Value is: $snapshot")
+                    KmpLogger.d("fetchDataNodo", "Value snapshot is: $snapshot")
                     onSuccess(snapshot.toString())
                 }
 
@@ -37,7 +37,7 @@ actual class FirebaseDataBaseRealTimeBridge : FirebaseRealTimeDataBase {
         )
 
         myFireBaseDataBase.getReference(nodoName)
-            .setValue(newValues)
+            .updateChildren(newValues)
             .addOnSuccessListener {
                 KmpLogger.d("putDataByNodoName", "Sucess $nodoName")
             }
