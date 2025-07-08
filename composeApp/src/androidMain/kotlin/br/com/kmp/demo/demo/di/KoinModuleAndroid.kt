@@ -28,7 +28,7 @@ fun moduleAndroid() = module {
     }
 
     single<FirebaseRemoteConfigs> { FirebaseRemoteConfigsBridge() }
-    factory {  ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get()) }
+    factory {  ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get(), get()) }
 
     single<FirebaseRealTimeDataBase> { FirebaseDataBaseRealTimeBridge() }
     factory { FirebaseRealTimeDataBaseViewModel(get<FirebaseRealTimeDataBase>() as FirebaseDataBaseRealTimeBridge, get()) }

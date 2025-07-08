@@ -43,11 +43,12 @@ Projeto:
 ✅ Consultar API Ktor\
 ✅ DI via Koin\
 ✅ Firebase Remote Config\
-🧩 Firebase Real Time DataBase\
+✅ Firebase Real Time DataBase\
+📅 Permissions e leitura de agenda
 ⚙️ SharedPreference, EncryptedSharedPreferences e KeychainSettings\
 📸 Foto com câmera + galeria\
 🗺️ Mapas com localização do usuário e pontos de interesse\
 💳 Multiplos meios de pagamento e carteiras digitais\
 🔐 Autenticação segura + biometria\
 🔔 Notificações push
-
+🕒 Schedule e work manager

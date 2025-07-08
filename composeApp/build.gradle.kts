@@ -85,7 +85,6 @@ kotlin {
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
 
-            implementation("com.github.skydoves:landscapist-coil3:2.4.4")
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:${ktorVersion}")

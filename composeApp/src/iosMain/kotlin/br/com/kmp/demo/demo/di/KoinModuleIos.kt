@@ -30,7 +30,7 @@ fun moduleIos(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
     }
 
     single<FirebaseRemoteConfigs> { FirebaseRemoteConfigsBridge(delegateFirebaseRemoteConfigs) }
-    factory { ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get()) }
+    factory { ListItemScreenViewModel(get<FirebaseRemoteConfigs>() as FirebaseRemoteConfigsBridge, get(), get()) }
 
     single<FirebaseRealTimeDataBase> { FirebaseDataBaseRealTimeBridge(delegateFirebaseRealTimeDataBase) }
     factory { FirebaseRealTimeDataBaseViewModel(get<FirebaseRealTimeDataBase>() as FirebaseDataBaseRealTimeBridge, get()) }

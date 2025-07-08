@@ -1,6 +1,7 @@
 package br.com.kmp.demo.demo.ui.screen
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,12 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BackHand
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,7 +40,7 @@ import androidx.navigation.NavHostController
 import br.com.kmp.demo.demo.ui.Routes.FIREBASEDATABASEREALTIMESSCREEN
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.components.AppColors
-import br.com.kmp.demo.demo.ui.components.ImageFromUrl
+import br.com.kmp.demo.demo.ui.components.ImageViewFromUrl
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import org.koin.compose.koinInject
 
@@ -61,6 +65,10 @@ fun ListItensScreen(
             valueRemoteConfigs = (stateRemoteConfig as ListItemScreenViewModel.RemoteConfigUiState.Success).valueRemoteConfig
         }
     }
+
+    val imageBytes by listItemsViewModel.myByteArray.collectAsState()
+
+
 
     DisposableEffect(Unit) {
         onDispose {
@@ -156,7 +164,13 @@ fun ListItensScreen(
                     Text(text = "Real time Data Base ", color = AppColors.blackNormal)
                     Text(text = "Nodo default message", color = AppColors.blackNormal)
                     Spacer(Modifier.height(10.dp))
-                    ImageFromUrl()
+                    if (imageBytes.isNotEmpty()) {
+                        ImageViewFromUrl(bytes = imageBytes)
+                    } else {
+                        Box(modifier = Modifier.wrapContentSize(), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator(modifier = Modifier.size(28.dp))
+                        }
+                    }
                 }
             }
 

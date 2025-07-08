@@ -1,7 +1,9 @@
 package br.com.kmp.demo.demo.ui.viewmodel
 
 import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigsBridge
+import br.com.kmp.demo.demo.ui.components.ImageLoader
 import br.com.kmp.demo.demo.ui.components.KmpLogger
+import io.ktor.client.HttpClient
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
@@ -11,18 +13,30 @@ import kotlinx.coroutines.launch
 
 class ListItemScreenViewModel(
     private val firebaseRemoteConfigsBridge: FirebaseRemoteConfigsBridge,
-    kmpLogger: KmpLogger
+    kmpLogger: KmpLogger,
+    private val httpClient: HttpClient
 ) : BaseViewModel() {
 
     private val _stateRemoteConfig = MutableStateFlow<RemoteConfigUiState>(RemoteConfigUiState.Loading(step = "loading"))
     val stateRemoteConfig: StateFlow<RemoteConfigUiState> = _stateRemoteConfig
     var jobRemoteConfig: Job? = SupervisorJob()
 
+    private val _myByteArray = MutableStateFlow<ByteArray>(ByteArray(0))
+    val myByteArray = _myByteArray
+
     init {
         kmpLogger.d("ListItemScreenViewModel", "init")
         firebaseRemoteConfigsBridge.fetchAndActivateFirebaseRemoteConfigs(2.0)
         viewModelScope.launch {
+            loadImgeByUrl()
             getValueRemoteConfigs()
+        }
+    }
+
+    suspend fun loadImgeByUrl() {
+        viewModelScope.launch {
+            val byteArray = ImageLoader(httpClient = httpClient).loadImageByUrl()
+            myByteArray.value = byteArray
         }
     }
 
