@@ -4,6 +4,7 @@ import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseDataBaseRealTimeBr
 import br.com.kmp.demo.demo.ui.components.KmpLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,17 +35,26 @@ class FirebaseRealTimeDataBaseViewModel(
     }
     
     fun putDataFirebaseDataBaseRealTime(nodoName: String, keyNewNodo: String, valueForNodo: String){
+
+        if(keyNewNodo.isEmpty() || valueForNodo.isEmpty() ){
+            return
+        }
+
         jobPutDataFirebaseDataBaseRealTime?.cancel()
         jobPutDataFirebaseDataBaseRealTime = viewModelScope.launch {
             try {
 
                 if(nodoName != nodo.value){
                     _nodo.value = nodoName
-                    getSnapShotFirebaseDataBaseRealTime(nodoName = nodoName)
+                    async {
+                        getSnapShotFirebaseDataBaseRealTime(nodoName = nodoName)
+                    }.await()
                 }
 
                 delay(timeMillis = 1000)
-                firebaseDataBaseRealTimeBridge.putDataByNodoName(nodoName = nodoName, keyNewNodo = keyNewNodo, valueForNodo = valueForNodo)
+                async {
+                    firebaseDataBaseRealTimeBridge.putDataByNodoName(nodoName = nodoName, keyNewNodo = keyNewNodo, valueForNodo = valueForNodo)
+                }.await()
                 delay(timeMillis = 100)
 
             }catch (exception: Exception){
@@ -56,26 +66,30 @@ class FirebaseRealTimeDataBaseViewModel(
     }
 
     fun getSnapShotFirebaseDataBaseRealTime(nodoName: String) {
+        KmpLogger.d("FirebaseRealTimeDataBaseViewModel", "getSnapShotFirebaseDataBaseRealTime nodoName-> $nodoName")
         jobGetSnaptShotFirebaseDataBaseRealTime?.cancel()
         jobGetSnaptShotFirebaseDataBaseRealTime = viewModelScope.launch {
             try {
-                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading()
-                delay(timeMillis = 100)
-                firebaseDataBaseRealTimeBridge.fetchDataNodo(
-                    nodoName = nodoName,
-                    onSuccess = { it ->
-                        _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Success(it)
-                    },
-                    onError =  { exception ->
-                        _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Error(exception.message.toString())
-                    }
-                )
-                delay(timeMillis = 100)
-                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
+//                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading()
+//                delay(timeMillis = 100)
+                async {
+                    firebaseDataBaseRealTimeBridge.fetchDataNodo(
+                        nodoName = nodoName,
+                        onSuccess = { it ->
+                            _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Success(it)
+                        },
+                        onError =  { exception ->
+                            _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Error(exception.message.toString())
+                        }
+                    )
+                }.await()
+
+//                delay(timeMillis = 100)
+//                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
             }catch (exception: Exception){
                 _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Error(exception.message.toString())
                 delay(timeMillis = 100)
-                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
+//                _stateSnapShotFiebaseDataBaseRealTimeByNodo.value = GetRealTimeDataBaseUiState.Loading("")
             }
         }
     }
