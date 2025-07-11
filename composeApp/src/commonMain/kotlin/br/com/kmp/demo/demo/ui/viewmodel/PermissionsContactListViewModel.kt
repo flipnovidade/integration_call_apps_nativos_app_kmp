@@ -2,7 +2,6 @@ package br.com.kmp.demo.demo.ui.viewmodel
 
 import br.com.kmp.demo.demo.permissions.PermissionRequestMyApp
 import br.com.kmp.demo.demo.permissions.PermissionResultCallback
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

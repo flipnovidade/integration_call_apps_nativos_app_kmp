@@ -138,6 +138,44 @@ class AppDelegate: NSObject, UIApplicationDelegate, PermissionRequestProtocol {
             return false
         }
     }
+    
+    func getListContacts(permission: String) -> [String] {
+        var results: [String] = []
+        
+        if(isPermissionGranted(permission: permission) == false){
+            results.append("DONT HAVE PERMISSION")
+        }
+        
+        let store = CNContactStore()
+        
+        // Verifica permissão
+        let status = CNContactStore.authorizationStatus(for: .contacts)
+        guard status == .authorized else {
+            return results
+        }
+        
+        let keys = [
+            CNContactIdentifierKey,
+            CNContactGivenNameKey,
+            CNContactFamilyNameKey,
+            CNContactPhoneNumbersKey
+        ] as [CNKeyDescriptor]
+        
+        let request = CNContactFetchRequest(keysToFetch: keys)
+            
+        do {
+            try store.enumerateContacts(with: request) { contact, stop in
+                let fullName = "\(contact.givenName) \(contact.familyName)"
+                let phones = contact.phoneNumbers
+                    .map { $0.value.stringValue }
+                results.append("\(fullName) – \(phones)")
+            }
+        } catch {
+            results.append("DONT HAVE PERMISSION")
+        }
+        
+        return results
+    }
 
 }
 
