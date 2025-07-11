@@ -2,6 +2,11 @@
 
 package br.com.kmp.demo.demo.permissions
 
+import br.com.kmp.demo.demo.di.koinInstance
+import kotlinx.coroutines.GlobalScope
+import org.koin.compose.getKoin
+import org.koin.core.Koin
+import kotlin.coroutines.EmptyCoroutineContext.get
 import kotlin.experimental.ExperimentalObjCName
 
 @OptIn(ExperimentalObjCName::class)
@@ -13,5 +18,5 @@ actual interface PermissionsListener {
 
 @Suppress("unused")
 fun registerPermissionHandler(listener: PermissionsListener){
-//    koinInstance.koin.get<PermissionRequestMyApp>().setListener(listener)
+    koinInstance.koin.get<PermissionRequestMyApp>().setListener(listener)
 }

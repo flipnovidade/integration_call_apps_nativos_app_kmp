@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSContactsUsageDescription</key>
-	<string>Preciso ler seus contatos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Preciso acessar suas fotos</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Preciso acessar sua câmera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Preciso ler seus contatos</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 </dict>

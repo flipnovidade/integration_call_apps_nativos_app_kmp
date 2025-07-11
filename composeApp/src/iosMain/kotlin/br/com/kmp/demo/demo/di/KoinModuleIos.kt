@@ -37,6 +37,6 @@ fun moduleIos(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
     single<FirebaseRealTimeDataBase> { FirebaseDataBaseRealTimeBridge(delegateFirebaseRealTimeDataBase) }
     factory { FirebaseRealTimeDataBaseViewModel(get<FirebaseRealTimeDataBase>() as FirebaseDataBaseRealTimeBridge, get()) }
 
-//    factory<PermissionRequestMyApp> { PermissionRequestMyApp(PermissionRequestMyApp.PERMISSION_READ_CONTACT) }
-    factory { PermissionsContactListViewModel(get()) }
+    single <PermissionRequestMyApp> { PermissionRequestMyApp() }
+    factory { PermissionsContactListViewModel( "CONTATO", get()) }
 }
