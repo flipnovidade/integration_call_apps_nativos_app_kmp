@@ -1,6 +1,7 @@
 package br.com.kmp.demo.demo
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +9,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
+import br.com.kmp.demo.demo.contact.retrieveAllContacts
 import br.com.kmp.demo.demo.permissions.PermissionRequestMyApp
 import br.com.kmp.demo.demo.permissions.PermissionResultCallback
 import br.com.kmp.demo.demo.permissions.PermissionsListener
@@ -65,6 +68,20 @@ class MainActivity : ComponentActivity(), PermissionsListener {
                 this,
             permission
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @RequiresPermission(Manifest.permission.READ_CONTACTS)
+    override fun getListContacts(permission: String): List<String> {
+
+        if (!isPermissionGranted(permission)) {
+            return listOf("DONT HAVE PERMISSION")
+        }
+
+        return retrieveAllContacts(
+            limit = 50,
+            offset = 0
+        )
+
     }
 
 }

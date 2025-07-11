@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -31,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import br.com.kmp.demo.demo.ui.CatId
 import br.com.kmp.demo.demo.ui.components.AppColors
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
@@ -47,6 +50,7 @@ fun PermissionsContactListScreen(
     permissionsContactListViewModel: PermissionsContactListViewModel = koinInject<PermissionsContactListViewModel>()) {
 
     val pemissionContactsGranted by permissionsContactListViewModel.granted.collectAsState()
+    val listContact by permissionsContactListViewModel.listContact.collectAsState()
 
     DisposableEffect(Unit) {
         onDispose {
@@ -110,6 +114,13 @@ fun PermissionsContactListScreen(
                     Text(text = "Click here request permission.", color = AppColors.whiteNormal)
                 }
 
+            }
+
+            Spacer(Modifier.height(20.dp))
+            LazyColumn {
+                items(listContact ) { contact ->
+                    Text(text = contact, style = MaterialTheme.typography.bodyLarge)
+                }
             }
 
         }

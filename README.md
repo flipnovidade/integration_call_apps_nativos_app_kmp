@@ -44,7 +44,7 @@ Projeto:
 ✅ DI via Koin\
 ✅ Firebase Remote Config\
 ✅ Firebase Real Time DataBase\
-📅 Permissions e leitura de agenda
+✅ Permissions e leitura de agenda
 ⚙️ SharedPreference, EncryptedSharedPreferences e KeychainSettings\
 📸 Foto com câmera + galeria\
 🗺️ Mapas com localização do usuário e pontos de interesse\

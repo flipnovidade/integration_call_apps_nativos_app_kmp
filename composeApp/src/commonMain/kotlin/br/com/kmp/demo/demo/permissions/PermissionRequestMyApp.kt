@@ -18,6 +18,10 @@ class PermissionRequestMyApp {
         return listener?.isPermissionGranted(permission = permission) == true
     }
 
+    fun getListContacts(permission: String): List<String> {
+        return listener?.getListContacts(permission = permission) ?: emptyList()
+    }
+
 }
 
 interface PermissionResultCallback {
@@ -28,4 +32,6 @@ interface PermissionResultCallback {
 expect interface PermissionsListener {
     fun requestPermission(permission: String, callback: PermissionResultCallback)
     fun isPermissionGranted(permission: String): Boolean
+
+    fun getListContacts(permission: String): List<String>
 }

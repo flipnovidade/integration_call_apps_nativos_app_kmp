@@ -6,4 +6,6 @@ package br.com.kmp.demo.demo.permissions
 actual interface PermissionsListener {
     actual fun requestPermission(permission: String, callback: PermissionResultCallback)
     actual fun isPermissionGranted(permission: String): Boolean
+
+    actual fun getListContacts(permission: String): List<String>
 }
