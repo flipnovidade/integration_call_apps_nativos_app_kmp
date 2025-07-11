@@ -1,7 +1,7 @@
-package br.com.kmp.demo.demo
+package br.com.kmp.demo.demo.repository
 
-import br.com.kmp.demo.demo.model.Cat
 import br.com.kmp.demo.demo.di.usecase.CatsUseCase
+import br.com.kmp.demo.demo.model.Cat
 import org.koin.core.context.stopKoin
 
 class ApiSdkCall(private val useCase: CatsUseCase) {

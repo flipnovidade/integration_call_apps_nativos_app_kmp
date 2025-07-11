@@ -1,5 +1,6 @@
 package br.com.kmp.demo.demo.ui.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,13 +36,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.key.Key.Companion.R
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.kmp.demo.demo.ui.Routes.FIREBASEDATABASEREALTIMESSCREEN
+import br.com.kmp.demo.demo.ui.Routes.PERMISSIONSLISTCONTACT
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.components.AppColors
 import br.com.kmp.demo.demo.ui.components.ImageViewFromUrl
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
+import br.com.kmp.demo.resources.Res
+import br.com.kmp.demo.resources.icon_calendar
+import br.com.kmp.demo.resources.image_not_found
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,8 +77,6 @@ fun ListItensScreen(
 
     val imageBytes by listItemsViewModel.myByteArray.collectAsState()
 
-
-
     DisposableEffect(Unit) {
         onDispose {
         }
@@ -84,7 +91,7 @@ fun ListItensScreen(
         Column(
             modifier = Modifier
                 .safeContentPadding()
-                .fillMaxSize(),
+                .fillMaxSize().padding(4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
@@ -171,6 +178,37 @@ fun ListItensScreen(
                             CircularProgressIndicator(modifier = Modifier.size(28.dp))
                         }
                     }
+                }
+            }
+
+            Spacer(Modifier.height(20.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth().border(
+                    width = 2.dp,
+                    color = AppColors.blueDark,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = AppColors.blueLight,
+                    contentColor = AppColors.blueNormal
+                ),
+                elevation = CardDefaults.cardElevation(),
+                onClick = { navController.navigate(PERMISSIONSLISTCONTACT) }
+            ) {
+                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(text = "Permissions ", color = AppColors.blackNormal)
+                    Text(text = "Show list contact", color = AppColors.blackNormal)
+                    Spacer(Modifier.height(10.dp))
+                    Image(
+                        contentDescription = null,
+                        modifier = Modifier.size(75.dp).clip(RoundedCornerShape(size = 12.dp)),
+                        alignment = Alignment.Center,
+                        contentScale = ContentScale.Fit,
+                        painter = painterResource(resource = Res.drawable.icon_calendar),
+                    )
                 }
             }
 

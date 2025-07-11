@@ -10,7 +10,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun App(onNavHostReady: suspend (NavController) -> Unit = {}) {
+fun App(
+        onNavHostReady: suspend (NavController) -> Unit = {}
+) {
 
     val navController = rememberNavController()
     AppNavigation(navController)

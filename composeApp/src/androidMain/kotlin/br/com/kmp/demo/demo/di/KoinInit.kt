@@ -13,10 +13,11 @@ actual class KoinInit() {
     }
 
     fun initKoin(androidContext: Context) {
+        val modules = sharedModules() + moduleAndroid()
         startKoin {
             androidLogger()
             androidContext(androidContext = androidContext)
-            modules(modules = moduleAndroid())
+            modules(modules = modules)
         }
     }
 }

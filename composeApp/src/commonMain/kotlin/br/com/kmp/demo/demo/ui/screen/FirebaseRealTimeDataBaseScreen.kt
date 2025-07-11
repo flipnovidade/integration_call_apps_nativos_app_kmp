@@ -100,7 +100,7 @@ fun FirebaseRealTimeDataBaseScreen(
         Column(
             modifier = Modifier
                 .safeContentPadding()
-                .fillMaxSize(),
+                .fillMaxSize().padding(4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 

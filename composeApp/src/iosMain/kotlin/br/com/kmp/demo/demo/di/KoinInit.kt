@@ -16,8 +16,9 @@ actual class KoinInit() {
     fun initKoin(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
                  delegateFirebaseRealTimeDataBase: FirebaseRealTimeDataBase) {
 
+        val modules = sharedModules() + moduleIos(delegateFirebaseRemoteConfigs, delegateFirebaseRealTimeDataBase)
         startKoin {
-            modules(modules = moduleIos(delegateFirebaseRemoteConfigs, delegateFirebaseRealTimeDataBase))
+            modules(modules = modules)
         }
 
     }
