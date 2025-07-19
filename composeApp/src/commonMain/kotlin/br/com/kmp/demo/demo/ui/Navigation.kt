@@ -9,11 +9,13 @@ import br.com.kmp.demo.demo.ui.Routes.FIREBASEDATABASEREALTIMESSCREEN
 import br.com.kmp.demo.demo.ui.Routes.LISTCATSCREEN
 import br.com.kmp.demo.demo.ui.Routes.LISTITEMSCREEN
 import br.com.kmp.demo.demo.ui.Routes.PERMISSIONSLISTCONTACT
+import br.com.kmp.demo.demo.ui.Routes.PREFSSTORAGE
 import br.com.kmp.demo.demo.ui.screen.DetailCatScreen
 import br.com.kmp.demo.demo.ui.screen.FirebaseRealTimeDataBaseScreen
 import br.com.kmp.demo.demo.ui.screen.ListCatsScreen
 import br.com.kmp.demo.demo.ui.screen.ListItensScreen
 import br.com.kmp.demo.demo.ui.screen.PermissionsContactListScreen
+import br.com.kmp.demo.demo.ui.screen.StoreDataScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -41,6 +43,10 @@ fun AppNavigation(navController: NavHostController) {
             PermissionsContactListScreen(navController)
         }
 
+        composable(PREFSSTORAGE) {
+            StoreDataScreen(navController)
+        }
+
     }
 }
 
@@ -49,6 +55,7 @@ object Routes {
     const val LISTITEMSCREEN = "listitensscreen"
     const val FIREBASEDATABASEREALTIMESSCREEN = "firebasedatabaserealtimesscreen"
     const val PERMISSIONSLISTCONTACT = "permissionslistcontact"
+    const val PREFSSTORAGE = "prefsstorage"
 }
 
 @Serializable

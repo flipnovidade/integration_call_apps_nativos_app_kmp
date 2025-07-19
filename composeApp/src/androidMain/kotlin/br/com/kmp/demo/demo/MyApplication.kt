@@ -2,7 +2,6 @@ package br.com.kmp.demo.demo
 
 import android.app.Application
 import android.content.Context
-import androidx.activity.ComponentActivity
 import br.com.kmp.demo.demo.di.KoinInit
 
 class MyApplication: Application() {

@@ -1,7 +1,6 @@
 package br.com.kmp.demo.demo
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -26,7 +25,6 @@ class MainActivity : ComponentActivity(), PermissionsListener {
             if (isGranted) {
                 contactPermissionResultCallback?.onPermissionGranted()
             } else {
-                val permanentlyDenied = !shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)
                 contactPermissionResultCallback?.onPermissionDenied()
             }
         }

@@ -59,6 +59,9 @@ kotlin {
             implementation("com.google.firebase:firebase-config:22.1.1")
             implementation("com.google.firebase:firebase-database:21.0.0")
 
+            implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+            implementation("com.google.crypto.tink:tink-android:1.8.0")
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -84,6 +87,7 @@ kotlin {
             implementation(kotlin("stdlib"))
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
+
 
         }
         iosMain.dependencies {
@@ -123,9 +127,19 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    signingConfigs {
+        create("release") {
+            storeFile = file(project.property("RELEASE_STORE_FILE") as String)
+            storePassword = project.property("RELEASE_STORE_PASSWORD") as String
+            keyAlias = project.property("RELEASE_KEY_ALIAS") as String
+            keyPassword = project.property("RELEASE_KEY_PASSWORD") as String
+        }
+    }
     buildTypes {
         getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
     compileOptions {

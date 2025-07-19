@@ -43,12 +43,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.kmp.demo.demo.ui.Routes.FIREBASEDATABASEREALTIMESSCREEN
 import br.com.kmp.demo.demo.ui.Routes.PERMISSIONSLISTCONTACT
+import br.com.kmp.demo.demo.ui.Routes.PREFSSTORAGE
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.components.AppColors
 import br.com.kmp.demo.demo.ui.components.ImageViewFromUrl
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.resources.Res
 import br.com.kmp.demo.resources.icon_calendar
+import br.com.kmp.demo.resources.icon_prefs
 import br.com.kmp.demo.resources.image_not_found
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -208,6 +210,39 @@ fun ListItensScreen(
                         alignment = Alignment.Center,
                         contentScale = ContentScale.Fit,
                         painter = painterResource(resource = Res.drawable.icon_calendar),
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(20.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth().border(
+                    width = 2.dp,
+                    color = AppColors.blueDark,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = AppColors.blueLight,
+                    contentColor = AppColors.blueNormal
+                ),
+                elevation = CardDefaults.cardElevation(),
+                onClick = { navController.navigate(PREFSSTORAGE) }
+            ) {
+                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(text = "Store key-values in KMP", color = AppColors.blackNormal)
+                    Text(text = "in the secure way", color = AppColors.blackNormal)
+                    Text(text = "iOS -> Keychain", color = AppColors.blackNormal)
+                    Text(text = "Android -> EncryptedSharedPreferences", color = AppColors.blackNormal)
+                    Spacer(Modifier.height(10.dp))
+                    Image(
+                        contentDescription = null,
+                        modifier = Modifier.size(75.dp).clip(RoundedCornerShape(size = 12.dp)),
+                        alignment = Alignment.Center,
+                        contentScale = ContentScale.Fit,
+                        painter = painterResource(resource = Res.drawable.icon_prefs),
                     )
                 }
             }
