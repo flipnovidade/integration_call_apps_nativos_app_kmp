@@ -1,23 +1,22 @@
 package br.com.kmp.demo.demo.setpref
 
 import kotlinx.cinterop.*
-import platform.CoreFoundation.*
-import platform.Foundation.*
-import platform.Security.*
-import platform.CoreFoundation.CFTypeRefVar
-import platform.Foundation.*
-import platform.Security.SecItemCopyMatching
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class SettingsApp: SecureSettings {
-    private val userDefaults = NSUserDefaults.standardUserDefaults()
+//    private val userDefaults = NSUserDefaults.standardUserDefaults()
+    val keychainSettings: KeychainSettings = KeychainSettings()
 
+    @OptIn(ExperimentalForeignApi::class)
     actual override fun putString(key: String, value: String) {
-        userDefaults.setObject(value = value, forKey = key)
+//        userDefaults.setObject(value = value, forKey = key)
+        keychainSettings.putString(key, value)
     }
 
+    @OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
     actual override fun getString(key: String): String? {
-        return userDefaults.stringForKey(defaultName = key)
+//        return userDefaults.stringForKey(defaultName = key)
+        return keychainSettings.getString(key, "")
     }
 
 }
