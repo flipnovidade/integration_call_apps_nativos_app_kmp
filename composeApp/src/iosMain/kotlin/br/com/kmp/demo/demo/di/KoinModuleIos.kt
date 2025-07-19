@@ -45,6 +45,6 @@ fun moduleIos(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
     single <PermissionRequestMyApp> { PermissionRequestMyApp() }
     factory { PermissionsContactListViewModel( "CONTATO", get()) }
 
-    single <SettingsApp> { SettingsApp(get<KMPContext>()) }
-    factory { StoreDataViewModel(get<SettingsApp>(), get()) }
+    single <SecureSettings> { SettingsApp() }
+    factory { StoreDataViewModel(get<SecureSettings>() as SettingsApp, get()) }
 }
