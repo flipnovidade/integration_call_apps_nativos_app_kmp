@@ -13,39 +13,22 @@ Projeto utilizado apenas para aprendizagem.
 Projeto:
 
 
-
--> KMP: engine de consulta api -> sera compartilhada entre os projetos.
-*  Compose
-*  MVVM
-*  Koin
-*  Ktor
-*  Navigation
-*  Material-ICons
-*  Logs
-* 
-* 
-
--> Android
-*  Firebase Remote-Config
-* 
-* 
-
--> Ios
-*  Firebase Remote-Config
-* 
-* 
-
 ->API
 ✨ Restful-api-dev (https://restful-api.dev/)
 
 
 * TODO: Escreva aqui seu desafio:\
 ✅ Consultar API Ktor\
+✅ Compose\
+✅ MVVM\
 ✅ DI via Koin\
+✅ Navigation\
+✅ Material-ICons\
+✅ Logs\
 ✅ Firebase Remote Config\
 ✅ Firebase Real Time DataBase\
 ✅ Permissions e leitura de agenda\
-⚙️ SharedPreference, EncryptedSharedPreferences e KeychainSettings\
+✅️ SharedPreference, EncryptedSharedPreferences e KeychainSettings\
 📸 Foto com câmera + galeria\
 🗺️ Mapas com localização do usuário e pontos de interesse\
 💳 Multiplos meios de pagamento e carteiras digitais\
