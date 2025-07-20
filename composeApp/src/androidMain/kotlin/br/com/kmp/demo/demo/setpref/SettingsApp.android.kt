@@ -39,7 +39,6 @@ actual class SettingsApp(private val context: Context) : SecureSettings {
 
     actual override fun getString(key: String): String? {
         return encryptedPrefs.getString(key, "empty")
-//        return "A"
     }
 
 }

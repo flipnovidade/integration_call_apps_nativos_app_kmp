@@ -1,7 +1,10 @@
 package br.com.kmp.demo.demo.ui.viewmodel
 
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.unit.dp
 import br.com.kmp.demo.demo.permissions.PermissionRequestMyApp
 import br.com.kmp.demo.demo.permissions.PermissionResultCallback
+import br.com.kmp.demo.demo.ui.components.imageBitmapFromByteArray
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -12,8 +15,8 @@ class TakePictureViewModel(
     private val _granted = MutableStateFlow( false)
     val granted: StateFlow<Boolean> = _granted
 
-    private val _listImage = MutableStateFlow<List<String>>( emptyList())
-    val listImage: StateFlow<List<String>> = _listImage
+    private val _myImageBitmap = MutableStateFlow<ImageBitmap?>(null)
+    val myImageBitmap: StateFlow<ImageBitmap?> = _myImageBitmap
 
     init {
         isPermissionGranted()
@@ -37,5 +40,8 @@ class TakePictureViewModel(
         return  _granted.value
     }
 
+     fun getBitmapImage(bytes: ByteArray) {
+         _myImageBitmap.value = imageBitmapFromByteArray(bytes = bytes, sizeImage = 120.dp)
+     }
 
 }

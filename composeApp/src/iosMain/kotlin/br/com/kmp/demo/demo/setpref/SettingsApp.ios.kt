@@ -16,7 +16,7 @@ actual class SettingsApp: SecureSettings {
     @OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
     actual override fun getString(key: String): String? {
 //        return userDefaults.stringForKey(defaultName = key)
-        return keychainSettings.getString(key, "")
+        return keychainSettings.getString(key, "empty")
     }
 
 }

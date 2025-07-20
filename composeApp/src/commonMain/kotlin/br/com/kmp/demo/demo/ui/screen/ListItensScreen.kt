@@ -48,7 +48,7 @@ import br.com.kmp.demo.demo.ui.Routes.PREFSSTORAGE
 import br.com.kmp.demo.demo.ui.Routes.TAKEORGETPICTURE
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.components.AppColors
-import br.com.kmp.demo.demo.ui.components.ImageFromByteArray
+import br.com.kmp.demo.demo.ui.components.imageBitmapFromByteArray
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.resources.Res
 import br.com.kmp.demo.resources.icon_calendar
@@ -187,7 +187,14 @@ fun ListItensScreen(
                         Text(text = "Nodo default message", color = AppColors.blackNormal)
                         Spacer(Modifier.height(10.dp))
                         if (imageBytes.isNotEmpty()) {
-                            ImageFromByteArray(bytes = imageBytes)
+                            Image(
+                                bitmap = imageBitmapFromByteArray(bytes = imageBytes),
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(120.dp)
+                                    .clip(RoundedCornerShape(size = 12.dp)),
+                                alignment = Alignment.Center,
+                                contentScale = ContentScale.Fit
+                            )
                         } else {
                             Box(modifier = Modifier.wrapContentSize(), contentAlignment = Alignment.Center) {
                                 CircularProgressIndicator(modifier = Modifier.size(28.dp))

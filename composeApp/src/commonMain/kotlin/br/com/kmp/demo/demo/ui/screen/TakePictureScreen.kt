@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,13 +34,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.kmp.demo.demo.image.SelectionMode
 import br.com.kmp.demo.demo.image.rememberImagePickerLauncher
 import br.com.kmp.demo.demo.ui.components.AppColors
-import br.com.kmp.demo.demo.ui.components.ImageFromByteArray
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.viewmodel.TakePictureViewModel
 import br.com.kmp.demo.resources.Res
@@ -55,7 +56,7 @@ fun TakePictureScreen(
 
     var newValue: String by remember { mutableStateOf("") }
     var valuePrefs: String by remember { mutableStateOf("") }
-    var image: ByteArray by remember { mutableStateOf(ByteArray(0)) }
+    val imageBitmap: ImageBitmap? by takePictureViewModel.myImageBitmap.collectAsState()
 
     val scope = rememberCoroutineScope()
     val singleImagePicker = rememberImagePickerLauncher(
@@ -63,7 +64,7 @@ fun TakePictureScreen(
         scope = scope,
         onResult = { byteArrays ->
             byteArrays.firstOrNull()?.let {
-                image = it
+                takePictureViewModel.getBitmapImage(it)
             }
         }
     )
@@ -130,15 +131,28 @@ fun TakePictureScreen(
 
                     Spacer(Modifier.height(10.dp))
 
-                    if(image.isNotEmpty()){
-                        ImageFromByteArray(bytes = image, sizeImage = 120.dp)
-                    }else{
+
+                    imageBitmap?.let {
+                        Image(
+                            bitmap = it,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(120.dp)
+                                .clip(RoundedCornerShape(size = 12.dp)),
+                            alignment = Alignment.Center,
+                            contentScale = ContentScale.Fit
+                        )
+                    }
+
+                    if (imageBitmap == null){
                         Image(
                             contentDescription = null,
-                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(120.dp).clip(RoundedCornerShape(size = 12.dp)),
+                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(120.dp)
+                                .clip(RoundedCornerShape(size = 12.dp)),
                             alignment = Alignment.Center,
                             contentScale = ContentScale.Fit,
-                            painter = painterResource(resource = Res.drawable.profile_empty) )
+                            painter = painterResource(resource = Res.drawable.profile_empty)
+                        )
+
                     }
 
                     Spacer(Modifier.height(15.dp))
