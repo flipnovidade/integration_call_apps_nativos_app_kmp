@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-actual fun ImageViewFromUrl(bytes: ByteArray, sizeImage: Dp) {
+actual fun ImageFromByteArray(bytes: ByteArray, sizeImage: Dp) {
 
     val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     val imageBitmap: ImageBitmap = bitmap.asImageBitmap()

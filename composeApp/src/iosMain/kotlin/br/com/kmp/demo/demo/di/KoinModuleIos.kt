@@ -18,6 +18,7 @@ import br.com.kmp.demo.demo.ui.components.KmpLogger
 import br.com.kmp.demo.demo.ui.viewmodel.FirebaseRealTimeDataBaseViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
+import br.com.kmp.demo.demo.ui.viewmodel.TakePictureViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.PermissionsContactListViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.StoreDataViewModel
 import org.koin.core.qualifier.named
@@ -47,4 +48,7 @@ fun moduleIos(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
 
     single <SecureSettings> { SettingsApp() }
     factory { StoreDataViewModel(get<SecureSettings>() as SettingsApp, get()) }
+
+    single <PermissionRequestMyApp> { PermissionRequestMyApp() }
+    factory { TakePictureViewModel("CAMERA", get()) }
 }

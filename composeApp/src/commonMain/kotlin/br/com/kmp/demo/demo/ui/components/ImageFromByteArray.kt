@@ -5,4 +5,4 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-expect fun ImageViewFromUrl(bytes: ByteArray, sizeImage: Dp = 75.dp)
+expect fun ImageFromByteArray(bytes: ByteArray, sizeImage: Dp = 75.dp)

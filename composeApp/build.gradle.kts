@@ -104,6 +104,12 @@ kotlin {
 
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 compose.resources {
     nameOfResClass = "Res"
     publicResClass = false
@@ -150,5 +156,6 @@ android {
 
 dependencies {
     implementation(libs.firebase.config.ktx)
+    implementation(libs.androidx.exifinterface)
     debugImplementation(compose.uiTooling)
 }

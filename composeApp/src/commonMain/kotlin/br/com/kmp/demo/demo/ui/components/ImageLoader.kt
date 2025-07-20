@@ -14,6 +14,7 @@ class ImageLoader(private val httpClient: HttpClient) {
             val response: HttpResponse = httpClient.get(urlString = url)
             return response.body()
         }catch (e: Exception) {
+            e.printStackTrace()
             return ByteArray(0)
         }
     }
