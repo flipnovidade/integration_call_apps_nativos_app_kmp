@@ -2,6 +2,8 @@ package br.com.kmp.demo.demo.ui.components
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -23,7 +25,7 @@ actual fun ImageFromByteArray(bytes: ByteArray, sizeImage: Dp) {
     Image(
         bitmap = imageBitmap,
         contentDescription = null,
-        modifier = Modifier.size(sizeImage).clip(RoundedCornerShape(size = 12.dp)),
+        modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(sizeImage).clip(RoundedCornerShape(size = 12.dp)),
         alignment = Alignment.Center,
         contentScale = ContentScale.Fit,)
 }

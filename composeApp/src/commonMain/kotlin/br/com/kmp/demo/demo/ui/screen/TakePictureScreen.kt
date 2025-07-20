@@ -131,14 +131,14 @@ fun TakePictureScreen(
                     Spacer(Modifier.height(10.dp))
 
                     if(image.isNotEmpty()){
-                        ImageFromByteArray(bytes = image, sizeImage = 75.dp)
+                        ImageFromByteArray(bytes = image, sizeImage = 120.dp)
                     }else{
                         Image(
                             contentDescription = null,
-                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(75.dp).clip(RoundedCornerShape(size = 12.dp)),
+                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(120.dp).clip(RoundedCornerShape(size = 12.dp)),
                             alignment = Alignment.Center,
                             contentScale = ContentScale.Fit,
-                            painter = painterResource(resource = Res.drawable.profile_empty))
+                            painter = painterResource(resource = Res.drawable.profile_empty) )
                     }
 
                     Spacer(Modifier.height(15.dp))
@@ -161,7 +161,6 @@ fun TakePictureScreen(
                     Button(
                         modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
                         onClick = {
-
                             if (takePictureViewModel.isPermissionGranted()){
                                 singleImagePicker.launch()
                             }else{
