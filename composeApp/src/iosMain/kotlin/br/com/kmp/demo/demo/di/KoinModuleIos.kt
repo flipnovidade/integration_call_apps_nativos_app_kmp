@@ -4,8 +4,8 @@ import br.com.kmp.demo.demo.KMPContext
 import br.com.kmp.demo.demo.repository.ApiSdkCall
 import br.com.kmp.demo.demo.di.repository.CatsRepository
 import br.com.kmp.demo.demo.di.usecase.CatsUseCase
-import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigs
-import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigsBridge
+import br.com.kmp.demo.demo.firebase.remoteconfig.FirebaseRemoteConfigs
+import br.com.kmp.demo.demo.firebase.remoteconfig.FirebaseRemoteConfigsBridge
 import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseDataBaseRealTimeBridge
 import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseRealTimeDataBase
 import br.com.kmp.demo.demo.network.createHttpClientFactory

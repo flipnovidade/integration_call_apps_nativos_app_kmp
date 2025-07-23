@@ -1,6 +1,6 @@
 package br.com.kmp.demo.demo.di
 
-import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigs
+import br.com.kmp.demo.demo.firebase.remoteconfig.FirebaseRemoteConfigs
 import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseRealTimeDataBase
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExportObjCClass

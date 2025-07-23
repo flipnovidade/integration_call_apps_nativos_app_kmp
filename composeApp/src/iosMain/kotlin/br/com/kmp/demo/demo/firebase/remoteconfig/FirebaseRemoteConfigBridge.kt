@@ -1,7 +1,8 @@
-package br.com.kmp.demo.demo.firebase
+package br.com.kmp.demo.demo.firebase.remoteconfig
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual class FirebaseRemoteConfigsBridge(private val delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs) : FirebaseRemoteConfigs {
+actual class FirebaseRemoteConfigsBridge(private val delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs) :
+    FirebaseRemoteConfigs {
 
     actual override fun fetchAndActivateFirebaseRemoteConfigs(fetchIntervalInSeconds: Double) {
         delegateFirebaseRemoteConfigs.fetchAndActivateFirebaseRemoteConfigs(fetchIntervalInSeconds)

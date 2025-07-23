@@ -1,6 +1,6 @@
 package br.com.kmp.demo.demo.ui.viewmodel
 
-import br.com.kmp.demo.demo.firebase.FirebaseRemoteConfigsBridge
+import br.com.kmp.demo.demo.firebase.remoteconfig.FirebaseRemoteConfigsBridge
 import br.com.kmp.demo.demo.ui.components.ImageLoader
 import br.com.kmp.demo.demo.ui.components.KmpLogger
 import io.ktor.client.HttpClient

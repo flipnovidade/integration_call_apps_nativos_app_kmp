@@ -7,7 +7,6 @@ import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys
-import br.com.kmp.demo.demo.MyApplication
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class SettingsApp(private val context: Context) : SecureSettings {
@@ -42,4 +41,3 @@ actual class SettingsApp(private val context: Context) : SecureSettings {
     }
 
 }
-

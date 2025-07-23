@@ -1,4 +1,4 @@
-package br.com.kmp.demo.demo.firebase
+package br.com.kmp.demo.demo.firebase.remoteconfig
 
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -11,7 +11,7 @@ actual class FirebaseRemoteConfigsBridge : FirebaseRemoteConfigs {
 
     actual override fun fetchAndActivateFirebaseRemoteConfigs(fetchIntervalInSeconds: Double) {
         val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = fetchIntervalInSeconds.toLong()
+            this.fetchTimeoutInSeconds = fetchIntervalInSeconds.toLong()
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.fetchAndActivate()
