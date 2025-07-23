@@ -18,6 +18,12 @@ class TakePictureViewModel(
     private val _myImageBitmap = MutableStateFlow<ImageBitmap?>(null)
     val myImageBitmap: StateFlow<ImageBitmap?> = _myImageBitmap
 
+    private val _takeImageBitmap = MutableStateFlow<ImageBitmap?>(null)
+    val takeImageBitmap: StateFlow<ImageBitmap?> = _takeImageBitmap
+
+    private val _imageBitmapArray = MutableStateFlow<ByteArray?>(null)
+    val imageBitmapArray: StateFlow<ByteArray?> = _imageBitmapArray
+
     init {
         isPermissionGranted()
     }
@@ -41,7 +47,13 @@ class TakePictureViewModel(
     }
 
      fun getBitmapImage(bytes: ByteArray) {
+         _imageBitmapArray.value = bytes
          _myImageBitmap.value = imageBitmapFromByteArray(bytes = bytes, sizeImage = 120.dp)
      }
+
+    fun getTakeBitmapImage(bytes: ByteArray) {
+        _imageBitmapArray.value = bytes
+        _takeImageBitmap.value = imageBitmapFromByteArray(bytes = bytes, sizeImage = 120.dp)
+    }
 
 }

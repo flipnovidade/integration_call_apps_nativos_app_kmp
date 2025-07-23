@@ -40,11 +40,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.kmp.demo.demo.image.SelectionMode
 import br.com.kmp.demo.demo.image.rememberImagePickerLauncher
+import br.com.kmp.demo.demo.permissionsnews.CameraManager
+import br.com.kmp.demo.demo.permissionsnews.SharedImage
+import br.com.kmp.demo.demo.permissionsnews.rememberCameraManager
+import br.com.kmp.demo.demo.share.ShareFileModel
+import br.com.kmp.demo.demo.share.rememberShareManager
 import br.com.kmp.demo.demo.ui.components.AppColors
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.viewmodel.TakePictureViewModel
 import br.com.kmp.demo.resources.Res
 import br.com.kmp.demo.resources.profile_empty
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
@@ -68,6 +74,15 @@ fun TakePictureScreen(
             }
         }
     )
+
+    val takePictureImageBitmap: ImageBitmap? by takePictureViewModel.takeImageBitmap.collectAsState()
+    val cameraManager: CameraManager = rememberCameraManager { sharedImage ->
+        takePictureViewModel.getTakeBitmapImage(sharedImage?.toByteArray()!!)
+    }
+
+    val imageBitmapArrayBytesForShare: ByteArray? by takePictureViewModel.imageBitmapArray.collectAsState()
+
+    val shareManager = rememberShareManager()
 
     DisposableEffect(Unit) {
         onDispose {
@@ -131,46 +146,9 @@ fun TakePictureScreen(
 
                     Spacer(Modifier.height(10.dp))
 
-
-                    imageBitmap?.let {
-                        Image(
-                            bitmap = it,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(120.dp)
-                                .clip(RoundedCornerShape(size = 12.dp)),
-                            alignment = Alignment.Center,
-                            contentScale = ContentScale.Fit
-                        )
-                    }
-
-                    if (imageBitmap == null){
-                        Image(
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp).size(120.dp)
-                                .clip(RoundedCornerShape(size = 12.dp)),
-                            alignment = Alignment.Center,
-                            contentScale = ContentScale.Fit,
-                            painter = painterResource(resource = Res.drawable.profile_empty)
-                        )
-
-                    }
+                    DisplayImage(imageBitmap = imageBitmap)
 
                     Spacer(Modifier.height(15.dp))
-
-                    Button(
-                        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
-                        onClick = {
-                            if (takePictureViewModel.isPermissionGranted()){
-
-                            }else{
-                                takePictureViewModel.requestPermission()
-                            }
-                        }
-                    ) {
-                        Text(text = "TAKE", color = AppColors.whiteNormal)
-                    }
-
-                    Spacer(Modifier.height(5.dp))
 
                     Button(
                         modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
@@ -185,6 +163,48 @@ fun TakePictureScreen(
                         Text(text = "GET", color = AppColors.whiteNormal)
                     }
 
+                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(20.dp))
+
+                    DisplayImage(imageBitmap = takePictureImageBitmap)
+
+                    Button(
+                        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+                        onClick = {
+                            if (takePictureViewModel.isPermissionGranted()){
+                                cameraManager.launch()
+                            }else{
+                                takePictureViewModel.requestPermission()
+                            }
+                        }
+                    ) {
+                        Text(text = "TAKE", color = AppColors.whiteNormal)
+                    }
+
+                    Spacer(Modifier.height(15.dp))
+
+                    Button(
+                        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+                        onClick = {
+
+                           if (imageBitmapArrayBytesForShare == null){
+                               return@Button
+                            }
+
+                            scope.launch {
+                                val bytes = imageBitmapArrayBytesForShare
+                                val shared = ShareFileModel(
+                                    fileName = "taked_pic.png",
+                                    bytes = bytes!!,
+                                )
+                                shareManager.shareFile(shared)
+                            }
+
+                        }
+                    ) {
+                        Text(text = "SHARE", color = AppColors.whiteNormal)
+                    }
+
                 }
 
             }
@@ -193,7 +213,31 @@ fun TakePictureScreen(
         }
 
     }
+}
 
-
-
+@Composable
+private fun DisplayImage(
+    imageBitmap: ImageBitmap?,
+    modifier: Modifier = Modifier.fillMaxWidth()
+        .padding(top = 10.dp)
+        .size(120.dp)
+        .clip(RoundedCornerShape(size = 12.dp))
+) {
+    if (imageBitmap != null) {
+        Image(
+            bitmap = imageBitmap,
+            contentDescription = null,
+            modifier = modifier,
+            alignment = Alignment.Center,
+            contentScale = ContentScale.Fit
+        )
+    } else {
+        Image(
+            painter = painterResource(resource = Res.drawable.profile_empty),
+            contentDescription = null,
+            modifier = modifier,
+            alignment = Alignment.Center,
+            contentScale = ContentScale.Fit
+        )
+    }
 }

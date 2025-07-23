@@ -29,7 +29,7 @@ Projeto:
 ✅ Firebase Real Time DataBase\
 ✅ Permissions e leitura de agenda\
 ✅️ SharedPreference, EncryptedSharedPreferences e KeychainSettings\
-📸 Foto com câmera + galeria\
+✅️ Foto com câmera + galeria + share
 🗺️ Mapas com localização do usuário e pontos de interesse\
 💳 Multiplos meios de pagamento e carteiras digitais\
 🔐 Autenticação segura + biometria\
