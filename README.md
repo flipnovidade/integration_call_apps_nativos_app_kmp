@@ -5,7 +5,7 @@
 
 Resumo:\
 Projeto de app em KMP em que todos os mobiles possam consumir, deixando centralizada as chamadas de api.
-Mostrar que independente a plataforma nativa é possivel consumir a api em KMP.
+Mostrar que independente a plataforma nativa é possivel consumir a api em KMM.
 Tendo assim uma arquitetura de api centralizada e todo um ecossitema completo.
 Projeto utilizado apenas para aprendizagem.
 
