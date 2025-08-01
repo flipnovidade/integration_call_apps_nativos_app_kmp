@@ -1,6 +1,7 @@
 package br.com.kmp.demo.demo
 
 import android.Manifest
+import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import br.com.kmp.demo.demo.contact.retrieveAllContacts
+import br.com.kmp.demo.demo.location.delegate.BluetoothPermissionDelegate
 import br.com.kmp.demo.demo.permissions.PermissionRequestMyApp
 import br.com.kmp.demo.demo.permissions.PermissionResultCallback
 import br.com.kmp.demo.demo.permissions.PermissionsListener

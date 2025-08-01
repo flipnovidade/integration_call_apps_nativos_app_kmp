@@ -46,12 +46,14 @@ import br.com.kmp.demo.demo.ui.Routes.FIREBASEDATABASEREALTIMESSCREEN
 import br.com.kmp.demo.demo.ui.Routes.PERMISSIONSLISTCONTACT
 import br.com.kmp.demo.demo.ui.Routes.PREFSSTORAGE
 import br.com.kmp.demo.demo.ui.Routes.TAKEORGETPICTURE
+import br.com.kmp.demo.demo.ui.Routes.MAP
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
 import br.com.kmp.demo.demo.ui.components.AppColors
 import br.com.kmp.demo.demo.ui.components.imageBitmapFromByteArray
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.resources.Res
 import br.com.kmp.demo.resources.icon_calendar
+import br.com.kmp.demo.resources.icon_location
 import br.com.kmp.demo.resources.icon_prefs
 import br.com.kmp.demo.resources.take_picture
 import org.jetbrains.compose.resources.painterResource
@@ -300,6 +302,37 @@ fun ListItensScreen(
 
                 }
 
+                Spacer(Modifier.height(20.dp))
+
+                Card(
+                    modifier = Modifier.fillMaxWidth().border(
+                        width = 2.dp,
+                        color = AppColors.blueDark,
+                        shape = RoundedCornerShape(16.dp)
+                    ),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = AppColors.blueLight,
+                        contentColor = AppColors.blueNormal
+                    ),
+                    elevation = CardDefaults.cardElevation(),
+                    onClick = { navController.navigate(MAP) }
+                ) {
+                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                        Spacer(Modifier.height(8.dp))
+                        Text(text = "Location", color = AppColors.blackNormal)
+                        Text(text = "--- ;P --", color = AppColors.blackNormal)
+                        Spacer(Modifier.height(10.dp))
+                        Image(
+                            contentDescription = null,
+                            modifier = Modifier.size(75.dp).clip(RoundedCornerShape(size = 12.dp)),
+                            alignment = Alignment.Center,
+                            contentScale = ContentScale.Fit,
+                            painter = painterResource(resource = Res.drawable.icon_location),
+                        )
+                    }
+
+                }
 
             }
         }

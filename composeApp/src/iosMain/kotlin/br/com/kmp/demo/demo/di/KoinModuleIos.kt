@@ -8,6 +8,15 @@ import br.com.kmp.demo.demo.firebase.remoteconfig.FirebaseRemoteConfigs
 import br.com.kmp.demo.demo.firebase.remoteconfig.FirebaseRemoteConfigsBridge
 import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseDataBaseRealTimeBridge
 import br.com.kmp.demo.demo.firebase.realtimedatabase.FirebaseRealTimeDataBase
+import br.com.kmp.demo.demo.location.delegate.BluetoothPermissionDelegate
+import br.com.kmp.demo.demo.location.delegate.BluetoothServicePermissionDelegate
+import br.com.kmp.demo.demo.location.delegate.LocationBackgroundPermissionDelegate
+import br.com.kmp.demo.demo.location.delegate.LocationForegroundPermissionDelegate
+import br.com.kmp.demo.demo.location.delegate.LocationServicePermissionDelegate
+import br.com.kmp.demo.demo.location.delegate.PermissionDelegate
+import br.com.kmp.demo.demo.location.model.Permission
+import br.com.kmp.demo.demo.location.service.PermissionsService
+import br.com.kmp.demo.demo.location.service.PermissionsServiceImpl
 import br.com.kmp.demo.demo.network.createHttpClientFactory
 import br.com.kmp.demo.demo.permissions.PermissionRequestMyApp
 import br.com.kmp.demo.demo.repository.CatRepositoryImple
@@ -18,6 +27,7 @@ import br.com.kmp.demo.demo.ui.components.KmpLogger
 import br.com.kmp.demo.demo.ui.viewmodel.FirebaseRealTimeDataBaseViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
+import br.com.kmp.demo.demo.ui.viewmodel.MapScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.TakePictureViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.PermissionsContactListViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.StoreDataViewModel
@@ -51,4 +61,30 @@ fun moduleIos(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
 
     single <PermissionRequestMyApp> { PermissionRequestMyApp() }
     factory { TakePictureViewModel("CAMERA", get()) }
+
+    single<PermissionDelegate>(named(Permission.BLUETOOTH_SERVICE_ON.name)) {
+        BluetoothServicePermissionDelegate()
+    }
+
+    single<PermissionDelegate>(named(Permission.BLUETOOTH.name)) {
+        BluetoothPermissionDelegate()
+    }
+
+    single<PermissionDelegate>(named(Permission.LOCATION_SERVICE_ON.name)) {
+        LocationServicePermissionDelegate()
+    }
+
+    single<PermissionDelegate>(named(Permission.LOCATION_FOREGROUND.name)) {
+        LocationForegroundPermissionDelegate()
+    }
+
+    single<PermissionDelegate>(named(Permission.LOCATION_BACKGROUND.name)) {
+        LocationBackgroundPermissionDelegate(
+            locationForegroundPermissionDelegate = get(named(Permission.LOCATION_FOREGROUND.name)),
+        )
+    }
+
+    single<PermissionsService> { PermissionsServiceImpl() }
+    factory { MapScreenViewModel(get()) }
+
 }
