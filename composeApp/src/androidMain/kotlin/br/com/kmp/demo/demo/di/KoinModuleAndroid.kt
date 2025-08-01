@@ -2,7 +2,6 @@ package br.com.kmp.demo.demo.di
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
 import android.bluetooth.BluetoothManager
 import android.content.Context
@@ -33,7 +32,7 @@ import br.com.kmp.demo.demo.setpref.SettingsApp
 import br.com.kmp.demo.demo.ui.viewmodel.FirebaseRealTimeDataBaseViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
-import br.com.kmp.demo.demo.ui.viewmodel.MapScreenViewModel
+import br.com.kmp.demo.demo.ui.viewmodel.LocationScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.TakePictureViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.PermissionsContactListViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.StoreDataViewModel
@@ -112,6 +111,6 @@ fun moduleAndroid() = module {
     single<PermissionsService>(named("permissionsService")) {
         PermissionsServiceImpl()
     }
-    factory { MapScreenViewModel(get(named("permissionsService"))) }
+    factory { LocationScreenViewModel(get(named("permissionsService"))) }
 
 }

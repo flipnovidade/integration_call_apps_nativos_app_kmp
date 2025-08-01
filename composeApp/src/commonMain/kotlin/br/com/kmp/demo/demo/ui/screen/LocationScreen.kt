@@ -39,17 +39,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.kmp.demo.demo.location.model.Permission
 import br.com.kmp.demo.demo.location.model.PermissionState
-import br.com.kmp.demo.demo.ui.components.KmpLogger
 import br.com.kmp.demo.demo.ui.components.RegisterBackHandler
-import br.com.kmp.demo.demo.ui.viewmodel.MapScreenViewModel
+import br.com.kmp.demo.demo.ui.viewmodel.LocationScreenViewModel
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapScreen(
+fun LocationScreen(
             navController: NavHostController,
-            mapScreenViewModel: MapScreenViewModel = koinInject<MapScreenViewModel>()){
+            locationScreenViewModel: LocationScreenViewModel = koinInject<LocationScreenViewModel>()){
 
     DisposableEffect(Unit) {
         onDispose {
@@ -116,21 +115,19 @@ fun MapScreen(
                         }
                     }
                     items(Permission.entries.toTypedArray()) { permission ->
-                        val permissionState by mapScreenViewModel.permissionsService.checkPermissionFlow(permission)
-                            .collectAsState(mapScreenViewModel.permissionsService.checkPermission(permission))
+                        val permissionState by locationScreenViewModel.permissionsService.checkPermissionFlow(permission)
+                            .collectAsState(locationScreenViewModel.permissionsService.checkPermission(permission))
 
                         PermissionItem(
                             permissionName = permission.name,
                             permissionState = permissionState,
                             onRequestClick = {
                                 scope.launch {
-                                    mapScreenViewModel.permissionsService.providePermission(permission)
-                                    val a = mapScreenViewModel.permissionsService.checkPermission(permission)
-                                    a.name.toString()
+                                    locationScreenViewModel.permissionsService.providePermission(permission)
                                 }
                             },
                             onOpenSettingsClick = {
-                                mapScreenViewModel.permissionsService.openSettingPage(permission)
+                                locationScreenViewModel.permissionsService.openSettingPage(permission)
                             },
                         )
 

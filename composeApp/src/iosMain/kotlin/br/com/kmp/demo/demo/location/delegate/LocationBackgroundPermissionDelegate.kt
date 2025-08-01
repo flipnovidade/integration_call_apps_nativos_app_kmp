@@ -9,15 +9,13 @@ import platform.CoreLocation.kCLAuthorizationStatusDenied
 internal class LocationBackgroundPermissionDelegate(
     private val locationForegroundPermissionDelegate: PermissionDelegate,
 ) : PermissionDelegate {
+
     override fun getPermissionState(): PermissionState {
         val foregroundPermissionStatus =
             locationForegroundPermissionDelegate.getPermissionState()
         return when (foregroundPermissionStatus) {
             PermissionState.GRANTED -> checkBackgroundLocationPermission()
-
-            PermissionState.DENIED,
-            PermissionState.NOT_DETERMINED,
-                -> foregroundPermissionStatus
+            PermissionState.DENIED, PermissionState.NOT_DETERMINED, -> foregroundPermissionStatus
         }
     }
 

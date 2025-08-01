@@ -27,7 +27,7 @@ import br.com.kmp.demo.demo.ui.components.KmpLogger
 import br.com.kmp.demo.demo.ui.viewmodel.FirebaseRealTimeDataBaseViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.ListItemScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.MainScreenViewModel
-import br.com.kmp.demo.demo.ui.viewmodel.MapScreenViewModel
+import br.com.kmp.demo.demo.ui.viewmodel.LocationScreenViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.TakePictureViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.PermissionsContactListViewModel
 import br.com.kmp.demo.demo.ui.viewmodel.StoreDataViewModel
@@ -85,6 +85,6 @@ fun moduleIos(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
     }
 
     single<PermissionsService> { PermissionsServiceImpl() }
-    factory { MapScreenViewModel(get()) }
+    factory { LocationScreenViewModel(get()) }
 
 }

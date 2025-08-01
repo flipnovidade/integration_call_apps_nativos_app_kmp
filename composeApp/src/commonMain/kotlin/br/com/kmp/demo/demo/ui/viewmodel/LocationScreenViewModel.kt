@@ -5,7 +5,7 @@ import br.com.kmp.demo.demo.location.model.PermissionState
 import br.com.kmp.demo.demo.location.service.PermissionsService
 import kotlinx.coroutines.flow.Flow
 
-class MapScreenViewModel(val permissionsService: PermissionsService): BaseViewModel(){
+class LocationScreenViewModel(val permissionsService: PermissionsService): BaseViewModel(){
 
     fun checkPermission(permission: Permission): PermissionState{
         return permissionsService.checkPermission(permission)

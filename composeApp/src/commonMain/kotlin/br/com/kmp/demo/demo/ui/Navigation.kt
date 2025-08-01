@@ -16,7 +16,7 @@ import br.com.kmp.demo.demo.ui.screen.DetailCatScreen
 import br.com.kmp.demo.demo.ui.screen.FirebaseRealTimeDataBaseScreen
 import br.com.kmp.demo.demo.ui.screen.ListCatsScreen
 import br.com.kmp.demo.demo.ui.screen.ListItensScreen
-import br.com.kmp.demo.demo.ui.screen.MapScreen
+import br.com.kmp.demo.demo.ui.screen.LocationScreen
 import br.com.kmp.demo.demo.ui.screen.PermissionsContactListScreen
 import br.com.kmp.demo.demo.ui.screen.StoreDataScreen
 import br.com.kmp.demo.demo.ui.screen.TakePictureScreen
@@ -56,7 +56,7 @@ fun AppNavigation(navController: NavHostController) {
         }
 
         composable(MAP) {
-            MapScreen(navController)
+            LocationScreen(navController)
         }
 
     }

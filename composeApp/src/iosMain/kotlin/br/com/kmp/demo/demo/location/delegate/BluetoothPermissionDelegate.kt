@@ -9,6 +9,7 @@ import platform.CoreBluetooth.CBManagerAuthorizationNotDetermined
 import platform.CoreBluetooth.CBManagerAuthorizationRestricted
 
 internal class BluetoothPermissionDelegate : PermissionDelegate {
+
     override fun getPermissionState(): PermissionState {
         return when (CBCentralManager.authorization) {
             CBManagerAuthorizationNotDetermined -> PermissionState.NOT_DETERMINED
