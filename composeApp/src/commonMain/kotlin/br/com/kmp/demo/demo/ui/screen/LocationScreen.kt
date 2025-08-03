@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -49,6 +51,8 @@ import org.koin.compose.koinInject
 fun LocationScreen(
             navController: NavHostController,
             locationScreenViewModel: LocationScreenViewModel = koinInject<LocationScreenViewModel>()){
+
+    val locationState by locationScreenViewModel.stateLocation.collectAsState()
 
     DisposableEffect(Unit) {
         onDispose {
@@ -95,6 +99,9 @@ fun LocationScreen(
                 modifier = Modifier.fillMaxSize(),
                 color = Color.White
             ) {
+
+
+
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     contentPadding = PaddingValues(
@@ -107,6 +114,16 @@ fun LocationScreen(
                 ) {
                     item {
                         Column {
+
+                            Text("Localização atual:", style = MaterialTheme.typography.titleLarge)
+
+                            locationState?.let { loc ->
+                                Text("Latitude: ${loc.latitude}")
+                                Text("Longitude: ${loc.longitude}")
+                            } ?: Text("Aguardando localização...")
+
+                            Spacer(Modifier.height(16.dp))
+
                             Text(
                                 text = "Permissions",
                                 color = Color.Black,

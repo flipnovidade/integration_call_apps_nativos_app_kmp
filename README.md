@@ -30,7 +30,7 @@ Projeto:
 ✅ Permissions e leitura de agenda\
 ✅️ SharedPreference, EncryptedSharedPreferences e KeychainSettings\
 ✅️ Foto com câmera + galeria + share\
-✅ Location provider\
+✅ Location provider + Localização atual\
 💳 Multiplos meios de pagamento e carteiras digitais\
 🔐 Autenticação segura + biometria\
 🔔 Notificações push\

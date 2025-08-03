@@ -15,6 +15,8 @@ import br.com.kmp.demo.demo.location.delegate.LocationForegroundPermissionDelega
 import br.com.kmp.demo.demo.location.delegate.LocationServicePermissionDelegate
 import br.com.kmp.demo.demo.location.delegate.PermissionDelegate
 import br.com.kmp.demo.demo.location.model.Permission
+import br.com.kmp.demo.demo.location.provider.LocationProvider
+import br.com.kmp.demo.demo.location.provider.IOSLocationProvider
 import br.com.kmp.demo.demo.location.service.PermissionsService
 import br.com.kmp.demo.demo.location.service.PermissionsServiceImpl
 import br.com.kmp.demo.demo.network.createHttpClientFactory
@@ -85,6 +87,14 @@ fun moduleIos(delegateFirebaseRemoteConfigs: FirebaseRemoteConfigs,
     }
 
     single<PermissionsService> { PermissionsServiceImpl() }
-    factory { LocationScreenViewModel(get()) }
+    single<LocationProvider>(named("locationProvider")){
+        IOSLocationProvider()
+    }
+    factory {
+        LocationScreenViewModel(
+            get(),
+            get(named("locationProvider"))
+        )
+    }
 
 }

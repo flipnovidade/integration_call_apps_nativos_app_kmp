@@ -20,6 +20,8 @@ import br.com.kmp.demo.demo.location.delegate.LocationForegroundPermissionDelega
 import br.com.kmp.demo.demo.location.delegate.LocationServicePermissionDelegate
 import br.com.kmp.demo.demo.location.delegate.PermissionDelegate
 import br.com.kmp.demo.demo.location.model.Permission
+import br.com.kmp.demo.demo.location.provider.AndroidLocationProvider
+import br.com.kmp.demo.demo.location.provider.LocationProvider
 import br.com.kmp.demo.demo.location.service.PermissionsService
 import br.com.kmp.demo.demo.location.service.PermissionsServiceImpl
 import br.com.kmp.demo.demo.network.createHttpClientFactory
@@ -111,6 +113,14 @@ fun moduleAndroid() = module {
     single<PermissionsService>(named("permissionsService")) {
         PermissionsServiceImpl()
     }
-    factory { LocationScreenViewModel(get(named("permissionsService"))) }
+    single<LocationProvider>(named("locationProvider")){
+        AndroidLocationProvider(context = get())
+    }
+    factory {
+        LocationScreenViewModel(
+            get(named("permissionsService")),
+            get(named("locationProvider"))
+        )
+    }
 
 }

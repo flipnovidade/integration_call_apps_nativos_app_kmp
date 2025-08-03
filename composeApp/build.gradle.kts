@@ -64,6 +64,8 @@ kotlin {
 
             implementation("com.google.accompanist:accompanist-permissions:0.37.3")
 
+            implementation("com.google.android.gms:play-services-location:21.0.1")
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
