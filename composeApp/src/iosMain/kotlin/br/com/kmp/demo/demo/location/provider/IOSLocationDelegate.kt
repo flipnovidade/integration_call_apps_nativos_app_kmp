@@ -56,7 +56,6 @@ class IOSLocationDelegate : NSObject(), CLLocationManagerDelegateProtocol {
         )
     }
 
-
     @OptIn(ExperimentalForeignApi::class)
     override fun locationManager(manager: CLLocationManager, didUpdateLocations: List<*>) {
         val locations = didUpdateLocations
@@ -81,6 +80,5 @@ class IOSLocationDelegate : NSObject(), CLLocationManagerDelegateProtocol {
             manager.startUpdatingLocation()
         }
     }
-
 
 }
